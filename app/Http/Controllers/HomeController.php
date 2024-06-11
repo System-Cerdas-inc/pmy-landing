@@ -8,6 +8,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        date_default_timezone_set('Asia/Jakarta');
+        $data['year'] = date("Y");
+        return view('home', $data);
     }
 }
