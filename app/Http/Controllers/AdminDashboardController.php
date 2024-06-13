@@ -11,8 +11,10 @@ class AdminDashboardController extends Controller
     {
         // Periksa apakah pengguna telah diautentikasi
         if (Auth::check()) {
+            date_default_timezone_set('Asia/Jakarta');
+            $data['year'] = date("Y");
             // Jika pengguna telah diautentikasi, lanjutkan ke dashboard
-            return view('admin.dashboard');
+            return view('admin.dashboard', $data);
         }
 
         // Jika pengguna belum diautentikasi, redirect ke halaman login
