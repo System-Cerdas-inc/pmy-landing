@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminPaketController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,9 @@ Route::post('/login-proses', [AdminAuthController::class, 'login'])->name('login
 Route::get('/logout-proses', [AdminAuthController::class, 'logout'])->name('logout-proses');
 
 Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/paket', [AdminPaketController::class, 'index'])->name('paket');
+Route::get('/table-paket', [AdminPaketController::class, 'show_table'])->name('table-paket');
+Route::get('/form-paket/{id?}', [AdminPaketController::class, 'index_form'])->name('form-paket');
+Route::post('/tambah-paket', [AdminPaketController::class, 'tambah'])->name('tambah-paket');
+Route::post('/status-paket', [AdminPaketController::class, 'status'])->name('status-paket');

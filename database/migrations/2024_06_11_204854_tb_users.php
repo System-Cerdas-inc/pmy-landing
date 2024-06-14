@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,6 +19,15 @@ return new class extends Migration
             $table->string('password');
             $table->timestamps();
         });
+
+        // Insert some stuff
+        DB::table('tb_users')->insert(
+            array(
+                'full_name' => 'Akun Test',
+                'email' => 'test@gmail.com',
+                'password' => 'NzBiakNVb2t3K21EbUt3d2s0eGlBUT09'
+            )
+        );
     }
 
     /**

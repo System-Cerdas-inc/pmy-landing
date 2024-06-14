@@ -13,6 +13,7 @@ class AdminDashboardController extends Controller
         if (Auth::check()) {
             date_default_timezone_set('Asia/Jakarta');
             $data['year'] = date("Y");
+            $data['menu'] = 'Dashboard';
             // Jika pengguna telah diautentikasi, lanjutkan ke dashboard
             return view('admin.dashboard', $data);
         }

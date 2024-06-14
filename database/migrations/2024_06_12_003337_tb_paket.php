@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('tb_paket', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kecepatan');
-            $table->string('harga');
-            $table->string('kondisi');
-            $table->string('jenis');
-            $table->string('popular');
-            $table->string('status');
+            $table->string('nama')->nullable();
+            $table->string('kecepatan')->nullable();
+            $table->string('harga')->nullable();
+            $table->string('kondisi')->nullable();
+            $table->string('jenis')->nullable();
+            $table->string('popular')->nullable();
+            $table->string('registrasi')->nullable();
+            $table->string('device')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
