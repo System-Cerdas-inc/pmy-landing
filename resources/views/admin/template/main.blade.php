@@ -57,7 +57,7 @@
                     <span>Profil</span></a>
             </li>
             <li class="nav-item {{ $menu == 'Paket' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('paket') }}">
+                <a class="nav-link" href="{{ route('admin-paket') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Paket</span></a>
             </li>
@@ -118,7 +118,6 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     @yield('main_content')
-
                 </div>
                 <!-- /.container-fluid -->
 

@@ -136,7 +136,7 @@
     });
 
     function btn_batal() {
-        window.location = `{{ route('paket') }}`;
+        window.location = `{{ route('admin-paket') }}`;
     }
 </script>
 @endsection
