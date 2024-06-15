@@ -111,17 +111,21 @@ class AdminPaketController extends Controller
         $data->registrasi = str_replace(".", "", $request->input('registrasi'));
         $data->jenis = $request->input('jenis');
         $data->popular = $request->has('popular');
+        // Set status default 1 jika data baru
+        if (!$id) {
+            $data->status = 1;
+        }
         $simpan = $data->save();
 
         $message = $id ? 'Data paket berhasil diperbarui.' : 'Data paket berhasil disimpan.';
 
         if ($simpan) {
-            return redirect()->route('paket')->with([
+            return redirect()->route('admin-paket')->with([
                 'message' => $message,
                 'alert-type' => 'success'
             ]);
         } else {
-            return redirect()->route('paket')->with([
+            return redirect()->route('admin-paket')->with([
                 'message' => 'Data paket gagal disimpan.',
                 'alert-type' => 'error'
             ]);

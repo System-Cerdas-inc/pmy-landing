@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminPaketController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/paket', [PaketController::class, 'index'])->name('paket');
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
 
 //admin
 Route::get('/auth', [AdminAuthController::class, 'index'])->name('auth');

@@ -56,7 +56,7 @@
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="btn-getstarted flex-md-shrink-0" href="index.html#about">Register</a>
+            <a class="btn-getstarted flex-md-shrink-0" href="{{ route('register') }}">Register</a>
 
         </div>
     </header>
@@ -74,7 +74,7 @@
                         <h4>Buktikan Hebatnya</h4>
                         <p>daftar dan pasang wifi rumah anda disini</p>
                         <center>
-                            <a href="#" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+                            <a href="{{ route('register') }}" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
                                 <span>Daftar Sekarang </span>
                                 <i class="bi bi-arrow-right"></i>
                             </a>
