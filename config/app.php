@@ -125,6 +125,10 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'api_wa_host' => env('WA_HOST'),
+    
+    'api_wa_token' => env('WA_TOKEN'),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
