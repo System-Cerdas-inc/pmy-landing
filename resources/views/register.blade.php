@@ -3,46 +3,110 @@
 @section('main_content')
 
 <!-- Contact Section -->
-<section id="contact" class="contact section">
+<section id="register" class="contact section">
 
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
+        <h2>Register</h2>
         <p>Contact Us</p>
     </div><!-- End Section Title -->
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form action="{{ route('proses-register') }}" method="post" class="php-email-form">
+                @csrf
                 <div class="row gy-4">
-
                     <div class="col-md-6">
-
-                    </div>
-
-                    <div class="col-md-6 ">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                            <label for="nama_depan">Nama Depan<c style="color: red;">*</c></label>
+                            <input class="form-control @error('nama_depan') is-invalid @enderror" name="nama_depan" id="nama_depan" placeholder="Masukkan nama depan" value="{{ old('nama_depan') }}">
+                            @error('nama_depan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
-
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nama_belakang">Nama Belakang<c style="color: red;">*</c></label>
+                            <input class="form-control @error('nama_belakang') is-invalid @enderror" name="nama_belakang" id="nama_belakang" placeholder="Masukkan nama belakang" value="{{ old('nama_belakang') }}">
+                            @error('nama_belakang')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="alamat">Alamat<c style="color: red;">*</c></label>
+                            <input class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" placeholder="Masukkan alamat" value="{{ old('alamat') }}">
+                            @error('alamat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="no_wa">Nomor Whatsapp<c style="color: red;">*</c></label>
+                            <input class="form-control @error('no_wa') is-invalid @enderror" name="no_wa" id="no_wa" placeholder="Masukkan nomor whatsapp" value="{{ old('no_wa') }}">
+                            @error('no_wa')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="kecamatan">Kecamatan<c style="color: red;">*</c></label>
+                            <input class="form-control @error('kecamatan') is-invalid @enderror" name="kecamatan" id="kecamatan" placeholder="Masukkan kecamatan" value="{{ old('kecamatan') }}">
+                            @error('kecamatan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="kelurahan">Kelurahan<c style="color: red;">*</c></label>
+                            <input class="form-control @error('kelurahan') is-invalid @enderror" name="kelurahan" id="kelurahan" placeholder="Masukkan kelurahan" value="{{ old('kelurahan') }}">
+                            @error('kelurahan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="paket">Pilih Paket<c style="color: red;">*</c></label>
+                            <select class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket">
+                                <option value="" selected>Pilih paket internet</option>
+                                @foreach($data_paket as $item)
+                                <option value="{{ $item->id }}" {{ old("paket") == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('paket')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="syarat_dan_ketentuan" name="syarat_dan_ketentuan">
+                        <label class="form-check-label" for="syarat_dan_ketentuan"> Harap Centang Syarat dan Ketentuan sebelum mengirim Formulir</label>
+                    </div>
+                    <a href="{{ route('syarat-dan-ketentuan') }}">Syarat dan Ketentuan</a>
 
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-                    </div>
-
-                    <div class="col-md-12">
-                        <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-                    </div>
-
-                    <div class="col-md-12 text-center">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                        <button type="submit">Send Message</button>
+                        <button type="submit">Kirim</button>
                     </div>
 
                 </div>

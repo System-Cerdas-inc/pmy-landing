@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('no_wa')->nullable();
             $table->string('kecamatan')->nullable();
             $table->string('kelurahan')->nullable();
-            $table->string('paket')->nullable();
+            $table->integer('paket');
             $table->string('status')->nullable();
             $table->timestamps();
         });

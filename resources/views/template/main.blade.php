@@ -23,6 +23,8 @@
     <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
     <!-- Main CSS File -->
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
@@ -122,8 +124,9 @@
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
+    <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+    <!-- <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script> -->
     <script src="{{ asset('vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
@@ -131,8 +134,91 @@
     <script src="{{ asset('vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
 
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <!-- Main JS File -->
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script>
+        @if(Session::has('message'))
+        var type = "{{ Session::get('alert-type', 'info') }}";
+        switch (type) {
+            case 'info':
+                toastr["info"]("{{ Session::get('message') }}", "Information");
+                break;
+
+            case 'warning':
+                toastr["warning"]("{{ Session::get('message') }}", "Warning!");
+                break;
+
+            case 'success':
+                toastr["success"]("{{ Session::get('message') }}", "Success");
+                break;
+
+            case 'error':
+                toastr["error"]("{{ Session::get('message') }}", "Error");
+                break;
+        }
+        @endif
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        function hanyaAngka(e, decimal) {
+            var key;
+            var keychar;
+            if (window.event) {
+                key = window.event.keyCode;
+            } else if (e) {
+                key = e.which;
+            } else {
+                return true;
+            }
+            keychar = String.fromCharCode(key);
+            if ((key === null) || (key === 0) || (key === 8) || (key === 9) || (key === 13) || (key === 27)) {
+                return true;
+            } else if ((("+0123456789").indexOf(keychar) > -1)) {
+                return true;
+            } else if (decimal && (keychar === ".")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka satuan ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+    </script>
 
 </body>
 

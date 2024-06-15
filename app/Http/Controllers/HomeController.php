@@ -14,4 +14,11 @@ class HomeController extends Controller
         $data['data_paket'] = PaketModel::take(3)->get();
         return view('home', $data);
     }
+
+    public function index_sk()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $data['year'] = date("Y");
+        return view('sk', $data);
+    }
 }
