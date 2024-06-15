@@ -32,6 +32,8 @@ Route::get('/logout-proses', [AdminAuthController::class, 'logout'])->name('logo
 
 Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
+Route::get('/admin-pendaftaran', [AdminDashboardController::class, 'index_register'])->name('admin-pendaftaran');
+Route::get('/table-pendaftaran', [AdminDashboardController::class, 'show_table_register'])->name('table-pendaftaran');
 Route::get('/admin-paket', [AdminPaketController::class, 'index'])->name('admin-paket');
 Route::get('/table-paket', [AdminPaketController::class, 'show_table'])->name('table-paket');
 Route::get('/form-paket/{id?}', [AdminPaketController::class, 'index_form'])->name('form-paket');
