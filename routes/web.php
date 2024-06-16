@@ -27,7 +27,8 @@ Route::post('/proses-register', [RegisterController::class, 'register'])->name('
 Route::get('/syarat-dan-ketentuan', [HomeController::class, 'index_sk'])->name('syarat-dan-ketentuan');
 
 //test wa
-Route::get('/test-wa', [HomeController::class, 'testWa'])->name('test-wa');
+Route::get('/test-wa', [HomeController::class, 'testWa'])->name('test-wa');=
+Route::get('/test', [RegisterController::class, 'test'])->name('test');
 
 //admin
 Route::get('/auth', [AdminAuthController::class, 'index'])->name('auth');
