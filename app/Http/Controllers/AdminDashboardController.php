@@ -175,7 +175,7 @@ class AdminDashboardController extends Controller
 
         // Simpan atau update data di database
         $data = UsersModel::findOrFail($id_user);
-        $data->password = $this->encryptionHelper->dekrip($request->input('password'));
+        $data->password = $this->encryptionHelper->enkrip($request->input('password'));
         $simpan = $data->save();
 
         if ($simpan) {
