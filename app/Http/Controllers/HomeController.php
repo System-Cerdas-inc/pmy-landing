@@ -33,7 +33,7 @@ class HomeController extends Controller
         return view('sk', $data);
     }
 
-    public function testWa()
+    public function testWaClient()
     {
         // Contoh data klien
         $clients = collect([
@@ -50,6 +50,32 @@ class HomeController extends Controller
 
         foreach ($clients as $client) {
             $response = $this->sendToClient($client);
+            $responses[] = $response;
+        }
+
+        return response()->json($responses);
+    }
+
+    public function testWaAdmin()
+    {
+        // Contoh data registrasi
+        $registrations = collect([
+            (object)[
+                'nama' => 'John Doe',
+                'alamat' => 'Jl. Kebon Jeruk No. 123',
+                'kelurahan' => 'Kebon Jeruk',
+                'kecamatan' => 'Kebon Jeruk',
+                'nomor_whatsapp' => '6281226260649',
+                'paket' => 'Paket A',
+                'biaya_pemasangan' => '500.000',
+                'rekomendasi' => 'Teman'
+            ],
+        ]);
+
+        $responses = [];
+
+        foreach ($registrations as $registration) {
+            $response = $this->sendToAdmin($registration);
             $responses[] = $response;
         }
 

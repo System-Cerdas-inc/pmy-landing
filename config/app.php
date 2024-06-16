@@ -129,6 +129,8 @@ return [
     
     'api_wa_token' => env('WA_TOKEN'),
 
+    'api_wa_group' => env('WA_GROUP_ID'),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
