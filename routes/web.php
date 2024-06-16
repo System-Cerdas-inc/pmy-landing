@@ -32,6 +32,9 @@ Route::get('/logout-proses', [AdminAuthController::class, 'logout'])->name('logo
 
 Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
+Route::get('/admin-profil', [AdminDashboardController::class, 'index_profil'])->name('admin-profil');
+Route::post('/datadiri-profil', [AdminDashboardController::class, 'datadiri_profil'])->name('datadiri-profil');
+Route::post('/password-profil', [AdminDashboardController::class, 'password_profil'])->name('password-profil');
 Route::get('/admin-pendaftaran', [AdminDashboardController::class, 'index_register'])->name('admin-pendaftaran');
 Route::get('/table-pendaftaran', [AdminDashboardController::class, 'show_table_register'])->name('table-pendaftaran');
 Route::get('/admin-paket', [AdminPaketController::class, 'index'])->name('admin-paket');

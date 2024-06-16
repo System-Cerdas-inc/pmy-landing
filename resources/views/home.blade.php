@@ -15,7 +15,7 @@
 
                 <p data-aos="fade-up" data-aos-delay="100" style="font-size: 14px;">*Syarat dan Ketentuan Berlaku</p>
                 <div class=" d-flex flex-column flex-md-row" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#about" class="btn-get-started">Register Sekarang <i class="bi bi-arrow-right"></i></a>
+                    <a href="#paket" class="btn-get-started">Cek Paket <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out">
@@ -102,7 +102,6 @@
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Tutorial</h2>
-        <p>Frequently Asked Questions</p>
     </div><!-- End Section Title -->
 
     <div class="container">
