@@ -1,12 +1,12 @@
 <?php
 
-namespace app\Http\Library;
+namespace App\Helpers;
 
 use Illuminate\Support\Facades\Http;
 
-trait WaNotification
+class WaNotification
 {
-    protected function sendToAdmin($nama, $no_telp, $url)
+    public function sendToAdmin($nama, $no_telp, $url)
     {
         $message = "Your message{nl}";
         $message .= "Your message *" . $nama . "*{nl}{nl}";
@@ -24,7 +24,7 @@ trait WaNotification
         }
     }
 
-    protected function sendToClient($client)
+    public function sendToClient($client)
     {
         $message = "Terimaksih sudah mendaftar untuk pemasangan internet,{nl}{nl}";
         $message .= "Nama : *" . $client->nama . "*{nl}";
@@ -47,7 +47,7 @@ trait WaNotification
         }
     }
 
-    protected function sendMessage($number, $message)
+    public function sendMessage($number, $message)
     {
         $url = config('app.api_wa_host');
         $token = config('app.api_wa_token');
@@ -77,7 +77,7 @@ trait WaNotification
     }
 
 
-    protected function sendMessageWithCheck($number, $message)
+    public function sendMessageWithCheck($number, $message)
     {
         $url = config('app.api_wa_host') . '/send';
         $token = config('app.api_wa_token');
@@ -105,7 +105,7 @@ trait WaNotification
         }
     }
 
-    protected function checkWaNumber($number)
+    public function checkWaNumber($number)
     {
         $url = config('app.api_wa_host') . '/validate';
         $token = config('app.api_wa_token');

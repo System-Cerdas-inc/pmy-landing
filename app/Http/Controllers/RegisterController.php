@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// use App\Http\Library\WaNotification as LibraryWaNotification;
+
+use App\Helpers\WaNotification;
 use App\Models\PaketModel;
 use App\Models\RegisterModel;
 use Illuminate\Http\Request;
@@ -9,12 +12,51 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    protected $WaNotification;
+
+    public function __construct()
+    {
+        $this->WaNotification = new WaNotification();
+    }
+
     public function index()
     {
         date_default_timezone_set('Asia/Jakarta');
         $data['year'] = date("Y");
         $data['data_paket'] = PaketModel::where('status', 1)->get();
         return view('register', $data);
+    }
+
+    public function test()
+    {
+        $client = [
+            'nama' => 'Test',
+            'alamat' => 'Alamat',
+            'paket' => "Paket Happy",
+            'biaya_pemasangan' => 'Rp. 200.000',
+            'no_telp' => '+6283834581221',
+        ];
+
+        try {
+            $response = $this->WaNotification->sendToClient((object) $client);
+
+            if ($response->status) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Notifikasi berhasil dikirim ke klien.'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal mengirim notifikasi ke klien.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function register(Request $request)
@@ -56,6 +98,18 @@ class RegisterController extends Controller
         $user->kelurahan = $request->kelurahan;
         $user->paket = $request->paket;
         $user->save();
+
+        //mengambil nama paket
+        $paket = PaketModel::find($request->paket);
+
+        $client = (object) [
+            'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
+            'alamat' => $request->alamat,
+            'paket' => $paket ? $paket->nama : 'Belum dipilih',
+            'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
+            'no_telp' => $request->no_wa,
+        ];
+        $this->WaNotification->sendToClient($client);
 
         // Redirect atau berikan respons bahwa data berhasil disimpan
         return redirect()->route('register')->with([
