@@ -34,7 +34,7 @@ trait WaNotification
 
     protected function sendToClient($client)
     {
-        $message = "Terimaksih sudah mendaftar untuk pemasangan internet,{nl}{nl}";
+        $message = "Terimaksih sudah mendaftar untuk pemasangan internet, di link paket.digitaljb.com{nl}{nl}";
         $message .= "Nama : *" . $client->nama . "*{nl}";
         $message .= "Alamat : *" . $client->alamat . "*{nl}";
         $message .= "Paket : *" . $client->paket . "*{nl}";
