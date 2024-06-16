@@ -6,6 +6,7 @@ use App\Models\PaketModel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminPaketController extends Controller
 {
@@ -13,9 +14,14 @@ class AdminPaketController extends Controller
     {
         // Periksa apakah pengguna telah diautentikasi
         if (Auth::check()) {
+            // Mengambil nilai dari sesi dengan kunci 'user'
+            $userData = Session::get('user');
+
+            $nama = $userData['nama'];
             date_default_timezone_set('Asia/Jakarta');
             $data['year'] = date("Y");
             $data['menu'] = 'Paket';
+            $data['nama_user'] = $nama;
             // Jika pengguna telah diautentikasi, lanjutkan ke dashboard
             return view('admin.paket.paket', $data);
         }
@@ -30,9 +36,14 @@ class AdminPaketController extends Controller
     {
         // Periksa apakah pengguna telah diautentikasi
         if (Auth::check()) {
+            // Mengambil nilai dari sesi dengan kunci 'user'
+            $userData = Session::get('user');
+
+            $nama = $userData['nama'];
             date_default_timezone_set('Asia/Jakarta');
             $data['year'] = date("Y");
             $data['menu'] = 'Paket';
+            $data['nama_user'] = $nama;
             $data['data_paket'] = $id ? PaketModel::findOrFail($id) : null;
             // Jika pengguna telah diautentikasi, lanjutkan ke dashboard
             return view('admin.paket.form', $data);

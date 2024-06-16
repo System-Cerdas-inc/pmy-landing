@@ -49,7 +49,7 @@ class AdminAuthController extends Controller
             // Manually store user information in the session
             Session::put('user', [
                 'id' => $user->id,
-                'name' => $user->name,
+                'nama' => $user->full_name,
                 'email' => $user->email,
             ]);
 

@@ -31,7 +31,7 @@
                         <li>Kuota Unlimited</li>
                         <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li>
                     </ul>
-                    <a href="#" class="btn-buy">Daftar Sekarang</a>
+                    <a href="{{ route('register') }}" class="btn-buy">Daftar Sekarang</a>
                 </div>
             </div><!-- End Pricing Item -->
             @endforeach
