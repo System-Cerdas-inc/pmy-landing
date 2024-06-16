@@ -24,15 +24,20 @@ trait WaNotification
         }
     }
 
-    protected function sendToClient($nama, $no_telp, $url)
+    protected function sendToClient($client)
     {
-        $message = "Your message{nl}";
-        $message .= "Your message *" . $nama . "*{nl}{nl}";
+        $message = "Terimaksih sudah mendaftar untuk pemasangan internet,{nl}{nl}";
+        $message .= "Nama : *" . $client->nama . "*{nl}";
+        $message .= "Alamat : *" . $client->nama . "*{nl}";
+        $message .= "Paket : *" . $client->nama . "*{nl}";
+        $message .= "Biaya Pemasangan : *" . $client->nama . "*{nl}";
+        $message .= "data sudah diterima, akan segera kami kabarin kembali ke nomer yang didaftarkan untuk jadwal pemasangannya.{nl}{nl}";
+        $message .= "Terima kasih.{nl}";
 
         $body = str_replace('{nl}', '%0a', $message);
 
         try {
-            $response = $this->sendMessage($no_telp, $body);
+            $response = $this->sendMessage($client->no_telp, $body);
             return $response;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             return response()->json([
