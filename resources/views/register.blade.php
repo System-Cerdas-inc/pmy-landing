@@ -106,14 +106,65 @@
                     <a href="{{ route('syarat-dan-ketentuan') }}">Syarat dan Ketentuan</a>
 
                     <div class="col-md-12">
-                        <button type="submit">Kirim</button>
+                        <button type="button" onclick="btn_submit();">Kirim</button>
                     </div>
-
                 </div>
             </form>
         </div>
 
     </div>
 
+    <div class="modal fade" id="modal_confirm" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title_confirm">Konfirmasi</h5>
+                </div>
+                <div class="modal-body">
+                    <div>Apakah data yang anda isi sudah benar?</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="tidakSubmitForm();">Tidak</button>
+                    <button type="button" class="btn btn-info" style="color: whites;" id="btn_confirm" onclick="submitForm();"><span class="d-none d-sm-block">Ya</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section><!-- /Contact Section -->
+
+<script>
+    function btn_submit() {
+        var nama_depan = document.getElementById('nama_depan').value;
+        var nama_belakang = document.getElementById('nama_belakang').value;
+        var alamat = document.getElementById('alamat').value;
+        var no_wa = document.getElementById('no_wa').value;
+        var kecamatan = document.getElementById('kecamatan').value;
+        var kelurahan = document.getElementById('kelurahan').value;
+        var paket = document.getElementById('paket').value;
+        var sk = document.getElementById('syarat_dan_ketentuan').checked
+
+        //check data isian
+        if (nama_depan === '' && nama_belakang === '' && alamat === '' && no_wa === '' && kecamatan === '' &&
+            kelurahan === '' && paket === '') {
+            toastr["warning"]("Mohon maaf, terdapat data yang belum terisi lengkap.", "Warning!");
+        } else {
+            // Cek apakah checkbox "Syarat dan Ketentuan" dicentang
+            if (!sk) {
+                toastr["warning"]("Mohon maaf anda belum menyetujui Syarat dan Ketentuan yang berlaku.", "Warning!");
+            } else {
+                $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            }
+        }
+    }
+
+    function submitForm() {
+        $('#modal_confirm').modal('hide'); // Sembunyikan modal konfirmasi
+        document.querySelector('.php-email-form').submit(); // Kirim form secara manual
+    }
+
+    function tidakSubmitForm() {
+        $('#modal_confirm').modal('hide'); // show bootstrap modal when complete loaded
+    }
+</script>
 @endsection
