@@ -61,6 +61,11 @@
                     <i class="fas fa-users"></i>
                     <span>List Pendaftaran</span></a>
             </li>
+            <li class="nav-item {{ $menu == 'Postingan' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin-postingan') }}">
+                    <i class="fas fa-pager"></i>
+                    <span>Postingan</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
