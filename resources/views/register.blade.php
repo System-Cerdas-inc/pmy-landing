@@ -1,6 +1,17 @@
 @extends('template.main')
 
 @section('main_content')
+<style>
+    /* Styling untuk progress bar */
+    #progress-bar-container {
+        display: none;
+        margin-top: 20px;
+    }
+
+    .progress {
+        height: 20px;
+    }
+</style>
 
 <!-- Contact Section -->
 <section id="register" class="contact section">
@@ -99,6 +110,12 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="rekomendasi">Rekomendasi/Info dari</label>
+                            <input class="form-control" name="rekomendasi" id="rekomendasi" placeholder="Masukkan rekomendasi" value="{{ old('rekomendasi') }}">
+                        </div>
+                    </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="syarat_dan_ketentuan" name="syarat_dan_ketentuan">
                         <label class="form-check-label" for="syarat_dan_ketentuan"> Harap Centang Syarat dan Ketentuan sebelum mengirim Formulir</label>
@@ -110,6 +127,13 @@
                     </div>
                 </div>
             </form>
+            <br>
+            <!-- Container untuk progress bar -->
+            <div id="progress-bar-container">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -160,7 +184,24 @@
 
     function submitForm() {
         $('#modal_confirm').modal('hide'); // Sembunyikan modal konfirmasi
-        document.querySelector('.php-email-form').submit(); // Kirim form secara manual
+
+        // Tampilkan progress bar
+        $('#progress-bar-container').show();
+        var progressBar = $('.progress-bar');
+        progressBar.css('width', '0%').attr('aria-valuenow', 0);
+
+        // Simulasi kemajuan pengiriman form
+        var progress = 0;
+        var interval = setInterval(function() {
+            progress += 10;
+            progressBar.css('width', progress + '%').attr('aria-valuenow', progress);
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                // Kirim form secara manual setelah progress bar mencapai 100%
+                document.querySelector('.php-email-form').submit();
+            }
+        }, 100); // Sesuaikan interval sesuai kebutuhan Anda
     }
 
     function tidakSubmitForm() {

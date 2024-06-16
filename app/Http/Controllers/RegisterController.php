@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Library\WaNotification as LibraryWaNotification;
-
-use App\Helpers\WaNotification;
+use App\Http\Library\WaNotification;
 use App\Models\PaketModel;
 use App\Models\RegisterModel;
 use Illuminate\Http\Request;
@@ -12,12 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    protected $WaNotification;
-
-    public function __construct()
-    {
-        $this->WaNotification = new WaNotification();
-    }
+    use WaNotification;
 
     public function index()
     {
@@ -29,34 +22,25 @@ class RegisterController extends Controller
 
     public function test()
     {
-        $client = [
-            'nama' => 'Test',
-            'alamat' => 'Alamat',
-            'paket' => "Paket Happy",
-            'biaya_pemasangan' => 'Rp. 200.000',
-            'no_telp' => '+6283834581221',
-        ];
+        // Contoh data klien
+        $clients = collect([
+            (object)[
+                'nama' => 'John Doe',
+                'alamat' => 'Jl. Kebon Jeruk No. 123',
+                'paket' => 'Paket A',
+                'biaya_pemasangan' => '500.000',
+                'no_telp' => '6281226260649'
+            ],
+        ]);
 
-        try {
-            $response = $this->WaNotification->sendToClient((object) $client);
+        $responses = [];
 
-            if ($response->status) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Notifikasi berhasil dikirim ke klien.'
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Gagal mengirim notifikasi ke klien.'
-                ]);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
+        foreach ($clients as $client) {
+            $response = $this->sendToClient($client);
+            $responses[] = $response;
         }
+
+        return response()->json($responses);
     }
 
     public function register(Request $request)
@@ -97,19 +81,50 @@ class RegisterController extends Controller
         $user->kecamatan = $request->kecamatan;
         $user->kelurahan = $request->kelurahan;
         $user->paket = $request->paket;
+        $user->rekomendasi = $request->rekomendasi;
         $user->save();
 
         //mengambil nama paket
         $paket = PaketModel::find($request->paket);
 
-        $client = (object) [
-            'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
-            'alamat' => $request->alamat,
-            'paket' => $paket ? $paket->nama : 'Belum dipilih',
-            'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
-            'no_telp' => $request->no_wa,
-        ];
-        $this->WaNotification->sendToClient($client);
+        // Send data klien
+        // $clients = collect([
+        //     (object)[
+        //         'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
+        //         'alamat' => $request->alamat,
+        //         'paket' => $paket ? $paket->nama : 'Belum dipilih',
+        //         'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
+        //         'no_telp' => $request->no_wa,
+        //     ],
+        // ]);
+
+        // $responses = [];
+
+        // foreach ($clients as $client) {
+        //     $response = $this->sendToClient($client);
+        //     $responses[] = $response;
+        // }
+
+        // // Send data registrasi
+        // $registrations = collect([
+        //     (object)[
+        //         'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
+        //         'alamat' => $request->alamat,
+        //         'kelurahan' => $request->kelurahan,
+        //         'kecamatan' => $request->kecamatan,
+        //         'nomor_whatsapp' => $request->no_wa,
+        //         'paket' => $paket ? $paket->nama : 'Belum dipilih',
+        //         'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
+        //         'rekomendasi' => $request->rekomendasi
+        //     ],
+        // ]);
+
+        // $responses = [];
+
+        // foreach ($registrations as $registration) {
+        //     $response = $this->sendToAdmin($registration);
+        //     $responses[] = $response;
+        // }
 
         // Redirect atau berikan respons bahwa data berhasil disimpan
         return redirect()->route('register')->with([

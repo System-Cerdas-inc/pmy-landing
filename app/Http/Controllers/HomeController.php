@@ -22,7 +22,11 @@ class HomeController extends Controller
 
         $data['data_paket'] = PaketModel::take(3)->get();
         $data['data_postingan'] = PostinganModel::where('jenis', 'Video')->get();
-        $data['data_postingan_harga'] = $postingan->judul;
+        $data['data_postingan_harga'] = '';
+
+        if ($postingan) {
+            $data['data_postingan_harga'] = number_format($postingan->judul, 0, ',', '.');
+        }
         return view('home', $data);
     }
 
@@ -41,7 +45,7 @@ class HomeController extends Controller
                 'nama' => 'John Doe',
                 'alamat' => 'Jl. Kebon Jeruk No. 123',
                 'paket' => 'Paket A',
-                'biaya' => '500.000',
+                'biaya_pemasangan' => '500.000',
                 'no_telp' => '6281226260649'
             ],
         ]);
