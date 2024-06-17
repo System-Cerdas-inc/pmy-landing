@@ -11,7 +11,7 @@
                 <h1 data-aos="fade-up">Nikmati Internet Cepat</h1>
                 <p data-aos="fade-up" data-aos-delay="100">Unlimited & Murah</p>
                 <br>
-                <h2 data-aos="fade-up" class="mb-3">Mulai Dari Rp. {{$data_postingan_harga}}/Bulan*</h2>
+                <h2 data-aos="fade-up" class="mb-3">Mulai Dari Rp. {{number_format($data_postingan_harga, 0, ',', '.')}}/Bulan*</h2>
 
                 <p data-aos="fade-up" data-aos-delay="100" style="font-size: 14px;">*Syarat dan Ketentuan Berlaku</p>
                 <div class=" d-flex flex-column flex-md-row" data-aos="fade-up" data-aos-delay="200">
@@ -78,7 +78,8 @@
                         <li>Bebas Device / HP yang terhubung</li>
                         <li>Standart Untuk 1 - {{ $item->device }} Device</li>
                         <li>Kuota Unlimited</li>
-                        <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li>
+                        <li>Registrasi Rp.{{ number_format($item->registrasi) }}</li>
+                        <!-- <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li> -->
                     </ul>
                     <a href="{{ route('register') }}" class="btn-buy">Daftar Sekarang</a>
                 </div>

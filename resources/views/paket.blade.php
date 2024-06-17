@@ -29,7 +29,8 @@
                         <li>Bebas Device / HP yang terhubung</li>
                         <li>Standart Untuk 1 - {{ $item->device }} Device</li>
                         <li>Kuota Unlimited</li>
-                        <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li>
+                        <li>Registrasi Rp.{{ number_format($item->registrasi) }}</li>
+                        <!-- <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li> -->
                     </ul>
                     <a href="{{ route('register') }}" class="btn-buy">Daftar Sekarang</a>
                 </div>
