@@ -100,7 +100,20 @@ class AdminPostinganController extends Controller
         // Validasi data
         $validator = Validator::make($request->all(), [
             'jenis' => 'required',
-            'judul' => 'required|string|max:255',
+            'judul' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($request) {
+                    // Cek apakah jenis adalah "Harga Dashboard"
+                    if ($request->jenis === 'Harga Dashboard') {
+                        // Lakukan validasi bahwa judul harus berupa angka
+                        if (!is_numeric($value)) {
+                            $fail('Judul harus berupa angka jika jenis adalah "Harga Dashboard".');
+                        }
+                    }
+                },
+            ],
             'video' => 'nullable|file|mimetypes:video/mp4',
         ]);
 
