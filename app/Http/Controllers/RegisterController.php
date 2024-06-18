@@ -94,7 +94,7 @@ class RegisterController extends Controller
                 'alamat' => $request->alamat,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
-                'no_telp' => $request->no_wa,
+                'no_telp' => $this->cleanNumber($request->no_wa)
             ],
         ]);
 
@@ -112,7 +112,7 @@ class RegisterController extends Controller
                 'alamat' => $request->alamat,
                 'kelurahan' => $request->kelurahan,
                 'kecamatan' => $request->kecamatan,
-                'nomor_whatsapp' => $request->no_wa,
+                'nomor_whatsapp' => $this->cleanNumber($request->no_wa),
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
                 'rekomendasi' => $request->rekomendasi
@@ -131,5 +131,13 @@ class RegisterController extends Controller
             'message' => 'Data anda sudah berhasil di register.',
             'alert-type' => 'success'
         ]);
+    }
+
+    //buat function untuk clean nomor whatsapp pake regex
+    public function cleanNumber($number)
+    {
+        //- hapus spasi, strip, dan karakter selain angka
+        $cleaned = preg_replace('/[^0-9]/', '', $number);
+        return $cleaned;
     }
 }
