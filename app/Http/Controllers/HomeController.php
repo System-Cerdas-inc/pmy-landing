@@ -25,7 +25,11 @@ class HomeController extends Controller
         $data['data_postingan_harga'] = '0';
 
         if ($postingan) {
-            $data['data_postingan_harga'] = number_format($postingan->judul, 0, ',', '.');
+            if (is_numeric($postingan->judul)) {
+                $data['data_postingan_harga'] = number_format($postingan->judul, 0, ',', '.');
+            } else {
+                $data['data_postingan_harga'] = '0';
+            }
         }
         return view('home', $data);
     }
