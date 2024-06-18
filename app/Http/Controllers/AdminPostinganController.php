@@ -70,9 +70,20 @@ class AdminPostinganController extends Controller
             } else {
                 $video = '<iframe width="640" height="360" src="' . $item->link_video . '" frameborder="0" allowfullscreen></iframe>';
             }
+
+            //check harga 
+            if ($item->jenis == 'Harga Dashboard') {
+                if (is_numeric($item->judul)) {
+                    $judul = 'Rp. ' . number_format($item->judul, 0, ',', '.');
+                } else {
+                    $judul = 'Judul harus berupa harga atau angka';
+                }
+            } else {
+                $judul = $item->judul;
+            }
             $result[] = [
                 'jenis' => $item->jenis,
-                'judul' => $item->judul,
+                'judul' => $judul,
                 'keterangan' => $item->keterangan,
                 'link_video' => $video,
                 'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>',

@@ -22,10 +22,14 @@ class HomeController extends Controller
 
         $data['data_paket'] = PaketModel::take(3)->get();
         $data['data_postingan'] = PostinganModel::where('jenis', 'Video')->get();
-        $data['data_postingan_harga'] = '';
+        $data['data_postingan_harga'] = '0';
 
         if ($postingan) {
-            $data['data_postingan_harga'] = number_format($postingan->judul, 0, ',', '.');
+            if (is_numeric($postingan->judul)) {
+                $data['data_postingan_harga'] = number_format($postingan->judul, 0, ',', '.');
+            } else {
+                $data['data_postingan_harga'] = '0';
+            }
         }
         return view('home', $data);
     }
