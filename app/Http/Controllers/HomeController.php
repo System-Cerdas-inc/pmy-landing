@@ -15,6 +15,7 @@ class HomeController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $data['year'] = date("Y");
+        $data['nama_menu'] = "Home";
 
         $postingan = PostinganModel::where('jenis', 'Harga Dashboard')
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at secara descending (terbaru dulu)
@@ -37,6 +38,7 @@ class HomeController extends Controller
     public function index_sk()
     {
         date_default_timezone_set('Asia/Jakarta');
+        $data['nama_menu'] = "Sarat dan Ketentuan";
         $data['year'] = date("Y");
         return view('sk', $data);
     }

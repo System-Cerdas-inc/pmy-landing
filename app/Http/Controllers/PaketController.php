@@ -11,6 +11,7 @@ class PaketController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $data['year'] = date("Y");
+        $data['nama_menu'] = "Paket";
         $data['data_paket'] = PaketModel::get();
         return view('paket', $data);
     }

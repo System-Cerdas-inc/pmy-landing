@@ -16,6 +16,7 @@ class RegisterController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $data['year'] = date("Y");
+        $data['nama_menu'] = "Register";
         $data['data_paket'] = PaketModel::where('status', 1)->get();
         return view('register', $data);
     }
