@@ -94,6 +94,10 @@
                     <td>DjBHome tidak bertanggung jawab atas pembayaran yang dilakukan oleh pelanggan ke rekening selain rekening resmi DjBHome (melalui Akun BRIVA). Karyawan DjBHome tidak diperbolehkan menerima imbalan atau pembayaran dalam bentuk apapun yang diberikan oleh pelanggan.</td>
                 </tr>
             </table>
+            <div class="php-email-form" style="background: white;">
+                <button type="button" class="" onclick="history.back()">Kembali</button>
+            </div>
+
         </div>
 
     </div>
