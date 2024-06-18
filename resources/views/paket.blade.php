@@ -23,13 +23,13 @@
 
                     <h2 style="color: #0dcaf0;">{{ $item->nama }}</h2>
                     <h6>{{ $item->kecepatan }} Mbps</h6>
-                    <div class="price"><sup>Rp.</sup>{{ number_format($item->harga) }}<span> / bulan</span></div>
+                    <div class="price"><sup>Rp.</sup>{{ number_format($item->harga, 0, ',', '.') }}<span> / bulan</span></div>
                     <ul>
                         <li>Kecepatan hingga {{ $item->kecepatan }} Mbps</li>
                         <li>Bebas Device / HP yang terhubung</li>
                         <li>Standart Untuk 1 - {{ $item->device }} Device</li>
                         <li>Kuota Unlimited</li>
-                        <li>Registrasi Rp.{{ number_format($item->registrasi) }}</li>
+                        <li>Registrasi Rp.{{ number_format($item->registrasi, 0, ',', '.') }}</li>
                         <!-- <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li> -->
                     </ul>
                     <a href="{{ route('register') }}" class="btn-buy">Daftar Sekarang</a>

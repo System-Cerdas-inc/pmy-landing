@@ -100,7 +100,7 @@
                             <select class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket">
                                 <option value="" selected>Pilih paket internet</option>
                                 @foreach($data_paket as $item)
-                                <option value="{{ $item->id }}" {{ old("paket") == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
+                                <option value="{{ $item->id }}" data-harga="{{ $item->registrasi }}" {{ old("paket") == $item->id ? 'selected' : '' }}>{{ $item->nama }} - Rp. {{ number_format($item->harga, 0, ',', '.') }}/bulan</option>
                                 @endforeach
                             </select>
                             @error('paket')
@@ -108,6 +108,7 @@
                                 {{ $message }}
                             </div>
                             @enderror
+                            <small id="harga-registrasi" style="display: none;">Harga Registrasi: </small>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -158,6 +159,36 @@
 </section><!-- /Contact Section -->
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var paketSelect = document.getElementById('paket');
+        var hargaRegistrasi = document.getElementById('harga-registrasi');
+
+        paketSelect.addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var harga = selectedOption.getAttribute('data-harga');
+            if (harga) {
+                hargaRegistrasi.style.display = 'inline'; // Tampilkan pesan harga registrasi
+                hargaRegistrasi.textContent = 'Harga Registrasi: Rp. ' + formatRupiah(harga); // Tampilkan harga registrasi
+            } else {
+                hargaRegistrasi.style.display = 'none'; // Sembunyikan pesan harga registrasi jika tidak ada harga
+            }
+        });
+
+        // Function untuk format rupiah
+        function formatRupiah(angka) {
+            var number_string = angka.toString().replace(/\D/g, '');
+            var split = number_string.split('');
+            var sisa = split.length % 3;
+            var rupiah = split.slice(0, sisa);
+            var ribuan = split.slice(sisa).join('').match(/\d{1,3}/gi);
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            return rupiah;
+        }
+    });
+
     function btn_submit() {
         var nama_depan = document.getElementById('nama_depan').value;
         var nama_belakang = document.getElementById('nama_belakang').value;
