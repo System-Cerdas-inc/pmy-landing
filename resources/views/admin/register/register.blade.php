@@ -23,7 +23,6 @@
                         <th>Alamat</th>
                         <th>Paket</th>
                         <th>Rekomendasi</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -87,17 +86,13 @@
                     name: 'Description'
                 },
                 {
-                    data: 'status',
-                    name: 'Status'
-                },
-                {
                     data: 'button',
                     name: 'Button'
                 }
                 // Tambahkan kolom lain sesuai kebutuhan
             ],
             'columnDefs': [{
-                "targets": [5, 6], // your case first column
+                "targets": [5], // your case first column
                 "className": "text-center",
             }],
             processing: true,
@@ -131,10 +126,10 @@
         $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
         $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
 
-        $('#text_confirm').html('Anda yakin ingin menonaktifkan user dengan nama <b>' + nama + '</b>?');
+        $('#text_confirm').html('Anda yakin ingin menghapus user dengan nama <b>' + nama + '</b>?');
         $('[name="id_confirm"]').val(id);
         $('[name="kondisi"]').val('nonaktif');
-        pesan = 'nonaktif';
+        pesan = 'penghapusan';
     }
 
     function confirm() {

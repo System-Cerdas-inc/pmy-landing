@@ -187,7 +187,7 @@ class AdminDashboardController extends Controller
 
     public function show_table_register()
     {
-        $data = RegisterModel::all();
+        $data = RegisterModel::where('status', '1')->get();
 
         $result = [];
         $counter = 1;
@@ -199,13 +199,13 @@ class AdminDashboardController extends Controller
                 $paket = PaketModel::find($item->paket);
             }
             //check status
-            if ($item->status == '1') {
-                $status = '<span class="badge badge-pill badge-success">Aktif</span>';
-                $btn = '<button type="button" class="btn btn-danger btn-sm" id="btn_nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-times fe-12"></span></button>';
-            } else {
-                $status = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
-                $btn = '<button type="button" class="btn btn-success btn-sm" id="btn_aktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
-            }
+            // if ($item->status == '1') {
+            $status = '<span class="badge badge-pill badge-success">Aktif</span>';
+            $btn = '<button type="button" class="btn btn-danger btn-sm" id="btn_nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-trash fe-12"></span></button>';
+            // } else {
+            //     $status = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
+            //     $btn = '<button type="button" class="btn btn-success btn-sm" id="btn_aktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
+            // }
 
             $result[] = [
                 'nama' => $nama,
@@ -215,7 +215,7 @@ class AdminDashboardController extends Controller
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'status' => $status,
+                // 'status' => $status,
                 'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>' . $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
             ];
