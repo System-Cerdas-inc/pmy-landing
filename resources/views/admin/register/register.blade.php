@@ -14,21 +14,22 @@
     <!-- Card Body -->
     <div class="card-body">
         <!-- table -->
-        <table class="table datatables" id="data_table">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>No WA</th>
-                    <th>Alamat</th>
-                    <th>Kecamatan</th>
-                    <th>Kelurahan</th>
-                    <th>Paket</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table datatables" id="data_table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>No WA</th>
+                        <th>Alamat</th>
+                        <th>Paket</th>
+                        <th>Rekomendasi</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -78,15 +79,11 @@
                     name: 'Description'
                 },
                 {
-                    data: 'kecamatan',
-                    name: 'Description'
-                },
-                {
-                    data: 'kelurahan',
-                    name: 'Description'
-                },
-                {
                     data: 'paket',
+                    name: 'Description'
+                },
+                {
+                    data: 'rekomendasi',
                     name: 'Description'
                 },
                 {
@@ -100,24 +97,22 @@
                 // Tambahkan kolom lain sesuai kebutuhan
             ],
             'columnDefs': [{
-                "targets": [6, 7], // your case first column
+                "targets": [5, 6], // your case first column
                 "className": "text-center",
             }],
             processing: true,
+            responsive: true,
+            autoWidth: true
             // serverSide: true
         });
     });
-
-    function modal_tambah() {
-        window.location = `{{ route('form-paket') }}`;
-    }
 
     function reload() {
         table.ajax.reload(null, false); //reload datatable ajax
     }
 
     function modal_edit(id) {
-        window.location = `{{ route('form-paket', ['id' => '__PLACEHOLDER__']) }}`.replace('__PLACEHOLDER__', id);
+        window.location = `{{ route('form-pendaftaran', ['id' => '__PLACEHOLDER__']) }}`.replace('__PLACEHOLDER__', id);
     }
 
     function btn_aktif(id, nama) {
@@ -125,7 +120,7 @@
         $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
         $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
 
-        $('#text_confirm').html('Anda yakin ingin mengaktifkan paket dengan nama <b>' + nama + '</b>?');
+        $('#text_confirm').html('Anda yakin ingin mengaktifkan user dengan nama <b>' + nama + '</b>?');
         $('[name="id_confirm"]').val(id);
         $('[name="kondisi"]').val('aktif');
         pesan = 'aktifasi';
@@ -136,7 +131,7 @@
         $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
         $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
 
-        $('#text_confirm').html('Anda yakin ingin menonaktifkan paket dengan nama <b>' + nama + '</b>?');
+        $('#text_confirm').html('Anda yakin ingin menonaktifkan user dengan nama <b>' + nama + '</b>?');
         $('[name="id_confirm"]').val(id);
         $('[name="kondisi"]').val('nonaktif');
         pesan = 'nonaktif';
@@ -144,7 +139,7 @@
 
     function confirm() {
         $.ajax({
-            url: "{{ route('status-paket') }}", //link access data
+            url: "{{ route('status-pendaftaran') }}", //link access data
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }, //Ini akan menambahkan token CSRF pada CUD
@@ -154,13 +149,13 @@
             success: function(data) {
                 //show notification
                 if (data.status === "success") {
-                    toastr["success"]("Paket data berhasil dilakukan " + pesan + ".", "Success");
+                    toastr["success"]("Data register berhasil dilakukan " + pesan + ".", "Success");
 
                     $('#form_confirm')[0].reset(); // reset form on modals
                     $('#modal_confirm').modal('hide'); // show bootstrap modal
                     reload();
                 } else {
-                    toastr["error"]("Paket data gagal dilakukan " + pesan + ", try again!", "Failed");
+                    toastr["error"]("Data register gagal dilakukan " + pesan + ", try again!", "Failed");
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {

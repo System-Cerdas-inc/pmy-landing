@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'nama_depan' => 'required|string|max:255',
             'nama_belakang' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'no_wa' => 'required|numeric|max:255|regex:/^[1-9][0-9]{8,14}$/',
+            'no_wa' => 'required|string|max:255',
             'kecamatan' => 'required|string|max:255',
             'kelurahan' => 'required|string|max:255',
             'paket' => 'required',
@@ -82,6 +82,7 @@ class RegisterController extends Controller
         $user->kelurahan = $request->kelurahan;
         $user->paket = $request->paket;
         $user->rekomendasi = $request->rekomendasi;
+        $user->status = '1';
         $user->save();
 
         //mengambil nama paket
