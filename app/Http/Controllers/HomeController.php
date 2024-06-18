@@ -21,7 +21,7 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at secara descending (terbaru dulu)
             ->first(); // Ambil data pertama yang cocok dengan kriteria di atas
 
-        $data['data_paket'] = PaketModel::take(3)->get();
+        $data['data_paket'] = PaketModel::where('status', '1')->take(3)->get();
         $data['data_postingan'] = PostinganModel::where('jenis', 'Video')->get();
         $data['data_postingan_harga'] = '0';
 
