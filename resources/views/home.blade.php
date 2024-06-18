@@ -11,7 +11,11 @@
                 <h1 data-aos="fade-up">Nikmati Internet Cepat</h1>
                 <p data-aos="fade-up" data-aos-delay="100">Unlimited & Murah</p>
                 <br>
-                <h2 data-aos="fade-up" class="mb-3">Mulai Dari Rp. {{number_format($data_postingan_harga, 0, ',', '.')}}/Bulan*</h2>
+                @if (!empty($data_postingan_harga))
+                    <h2 data-aos="fade-up" class="mb-3">Mulai Dari Rp. {{number_format($data_postingan_harga, 0, ',', '.')}}/Bulan*</h2>
+                @else
+                    <h2 data-aos="fade-up" class="mb-3">Mulai Dari Rp. 0/Bulan*</h2>
+                @endif
 
                 <p data-aos="fade-up" data-aos-delay="100" style="font-size: 14px;">*Syarat dan Ketentuan Berlaku</p>
                 <div class=" d-flex flex-column flex-md-row" data-aos="fade-up" data-aos-delay="200">
