@@ -187,7 +187,7 @@ class AdminDashboardController extends Controller
 
     public function show_table_register()
     {
-        $data = RegisterModel::where('status', '1')->get();
+        $data = RegisterModel::where('status', '1')->orderBy('created_at', 'desc')->get();
 
         $result = [];
         $counter = 1;
