@@ -87,7 +87,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <p>Khusus untuk customer yang sudah berlangganan, bila belum mengetahui user dan password client area silahkan hubungi cs, Whatsapp: 085-700-600-177 (chat only)</p>
+            <p>Khusus untuk customer yang sudah berlangganan, bila belum mengetahui user dan password client area silahkan hubungi cs, Whatsapp: <a href="https://wa.me/6285700600177" target="_blank">085-700-600-177</a> (chat only)</p>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
