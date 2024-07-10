@@ -64,7 +64,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="no_wa">Nomor Whatsapp<c style="color: red;">*</c></label>
-                            <input class="form-control @error('no_wa') is-invalid @enderror" name="no_wa" id="no_wa" placeholder="Masukkan nomor whatsapp" value="{{ old('no_wa') }}">
+                            <input class="form-control @error('no_wa') is-invalid @enderror" name="no_wa" id="no_wa" placeholder="Masukkan nomor whatsapp" value="{{ old('no_wa') }}" onkeypress="return hanyaAngka(event, true);">
                             @error('no_wa')
                             <div class="invalid-feedback">
                                 {{ $message }}

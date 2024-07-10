@@ -43,6 +43,9 @@ Route::post('/password-profil', [AdminDashboardController::class, 'password_prof
 //admin pendaftaran
 Route::get('/admin-pendaftaran', [AdminDashboardController::class, 'index_register'])->name('admin-pendaftaran');
 Route::get('/table-pendaftaran', [AdminDashboardController::class, 'show_table_register'])->name('table-pendaftaran');
+Route::post('/status-pendaftaran', [AdminDashboardController::class, 'status_register'])->name('status-pendaftaran');
+Route::get('/form-pendaftaran/{id?}', [AdminDashboardController::class, 'index_form_register'])->name('form-pendaftaran');
+Route::post('/update-paket', [AdminDashboardController::class, 'update_register'])->name('update-paket');
 //admin paket
 Route::get('/admin-paket', [AdminPaketController::class, 'index'])->name('admin-paket');
 Route::get('/table-paket', [AdminPaketController::class, 'show_table'])->name('table-paket');
