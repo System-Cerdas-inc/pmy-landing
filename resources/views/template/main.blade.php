@@ -52,9 +52,14 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="{{ route('home') }}" class="active">Home<br></a></li>
+                    @if($nama_menu == 'Home')
                     <li><a href="#paket">Paket</a></li>
                     <li><a href="#tutorial">Tutorial</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
+                    @else
+                    <li><a href="{{ route('paket') }}">Paket</a></li>
+                    <li><a href="{{ route('home') }}/#tutorial">Tutorial</a></li>
+                    @endif
                     <li><a href="{{ route('auth') }}">Admin Panel</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

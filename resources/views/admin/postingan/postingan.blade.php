@@ -17,18 +17,20 @@
     <!-- Card Body -->
     <div class="card-body">
         <!-- table -->
-        <table class="table datatables" id="data_table">
-            <thead>
-                <tr>
-                    <th>Jenis Postingan</th>
-                    <th>Judul</th>
-                    <th>Keterangan</th>
-                    <th>Video</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table datatables" id="data_table">
+                <thead>
+                    <tr>
+                        <th>Jenis Postingan</th>
+                        <th>Judul</th>
+                        <th>Keterangan</th>
+                        <th>Video</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -62,6 +64,7 @@
                 "className": "text-center",
             }],
             processing: true,
+            responsive: true
             // serverSide: true
         });
     });

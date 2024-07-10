@@ -118,7 +118,9 @@
                             <p>
                                 {{ $item->keterangan }}
                                 <br>
-                                <iframe width="640" height="360" src="{{ $item->link_video }}" frameborder="0" allowfullscreen></iframe>
+                                <video width="640" height="360" controls="controls" type="video/mp4" preload="none">
+                                    <source src="{{ $item->link_video }}" autostart="false">
+                                </video>
                             </p>
 
                         </div>

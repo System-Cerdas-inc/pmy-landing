@@ -17,22 +17,24 @@
     <!-- Card Body -->
     <div class="card-body">
         <!-- table -->
-        <table class="table datatables" id="data_table">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Kecepatan</th>
-                    <th>Jenis</th>
-                    <th>Device</th>
-                    <th>Harga</th>
-                    <th>Registrasi</th>
-                    <th>Popular</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table datatables" id="data_table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Kecepatan</th>
+                        <th>Jenis</th>
+                        <th>Device</th>
+                        <th>Harga</th>
+                        <th>Registrasi</th>
+                        <th>Popular</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -112,6 +114,7 @@
                 "className": "text-center",
             }],
             processing: true,
+            responsive: true
             // serverSide: true
         });
     });
