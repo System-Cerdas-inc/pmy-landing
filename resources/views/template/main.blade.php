@@ -55,6 +55,7 @@
                     @if($nama_menu == 'Home')
                     <li><a href="#paket">Paket</a></li>
                     <li><a href="#tutorial">Tutorial</a></li>
+                    <li><a href="{{ route('register') }}">Register</a></li>
                     @else
                     <li><a href="{{ route('paket') }}">Paket</a></li>
                     <li><a href="{{ route('home') }}/#tutorial">Tutorial</a></li>
@@ -63,8 +64,6 @@
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-
-            <a class="btn-getstarted flex-md-shrink-0" href="{{ route('register') }}">Register</a>
 
         </div>
     </header>
