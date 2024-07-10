@@ -54,12 +54,11 @@
                     <li><a href="{{ route('home') }}" class="active">Home<br></a></li>
                     <li><a href="#paket">Paket</a></li>
                     <li><a href="#tutorial">Tutorial</a></li>
+                    <li><a href="{{ route('register') }}">Register</a></li>
                     <li><a href="{{ route('auth') }}">Admin Panel</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-
-            <a class="btn-getstarted flex-md-shrink-0" href="{{ route('register') }}">Register</a>
 
         </div>
     </header>
