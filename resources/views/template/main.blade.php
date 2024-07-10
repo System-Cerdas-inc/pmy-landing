@@ -65,7 +65,9 @@
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="btn-getstarted flex-md-shrink-0" href="#">Client Area</a>
+            <button type="button" class="btn-getstarted flex-md-shrink-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Client Area
+            </button>
 
         </div>
     </header>
@@ -73,6 +75,27 @@
     <main class="main">
         @yield('main_content')
     </main>
+
+    <!-- ======= Modal ======= -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Informasi</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <p>Khusus untuk customer yang sudah berlangganan, bila belum mengetahui user dan password client area silahkan hubungi cs, Whatsapp: 085-700-600-177 (chat only)</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+            <button type="button" class="btn btn-primary" onclick="window.open('http://area.digitaljb.com', '_blank')">Lanjut</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <footer id="footer" class="footer">
 
