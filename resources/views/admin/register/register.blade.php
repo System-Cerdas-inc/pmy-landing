@@ -17,7 +17,7 @@
             <div class="table-responsive">
                 <table class="table datatables" id="data_table">
                     <thead>
-                        <tr style="font-size: 10px;">
+                        <tr>
                             <th>Nama</th>
                             <th>No WA</th>
                             <th>Alamat</th>
@@ -27,7 +27,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody style="font-size: 10px;"></tbody>
                 </table>
             </div>
         </div>
