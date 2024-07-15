@@ -215,6 +215,7 @@ class AdminDashboardController extends Controller
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
+                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
                 // 'status' => $status,
                 'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>' . $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
