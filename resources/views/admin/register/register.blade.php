@@ -23,6 +23,7 @@
                             <th>Alamat</th>
                             <th>Paket</th>
                             <th>Rekomendasi</th>
+                            <th>Created At</th>
                             <th>Action</th>
                         </tr>
                     </thead>
