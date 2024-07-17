@@ -157,7 +157,7 @@
         $.ajax({
             url: "{{ route('status-paket') }}", //link access data
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
             }, //Ini akan menambahkan token CSRF pada CUD
             type: "POST", //action in form
             dataType: "JSON", //accepted data types
