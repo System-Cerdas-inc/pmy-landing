@@ -198,26 +198,39 @@ class AdminDashboardController extends Controller
             if (!empty($item->paket)) {
                 $paket = PaketModel::find($item->paket);
             }
-            //check status
-            // if ($item->status == '1') {
-            $status = '<span class="badge badge-pill badge-success">Aktif</span>';
-            $btn = '<button type="button" class="btn btn-danger btn-sm" id="btn_nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-trash fe-12"></span></button>';
-            // } else {
-            //     $status = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
-            //     $btn = '<button type="button" class="btn btn-success btn-sm" id="btn_aktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
-            // }
+            //status selesai = icon checklist
+            $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check"></i></span>';
+            //status pending = icon tanda seru
+            $status .= '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i></span>';
+            //status pasang = icon process
+            $status .= '<span class="badge badge-pill badge-primary"><i class="fas fa-spinner"></i></span>';
+            //status tidak pasang = icon cross
+            $status .= '<span class="badge badge-pill badge-danger"><i class="fas fa-times"></i></span>';
+            $btn = '<button type="button" class="btn btn-warning btn-sm" alt="Edit" onclick="modal_edit(' . "'" . $item->id . "'" . ')">
+                    <span class="fas fa-edit fe-12"></span>
+                    </button>';
+            $btn .= '<button type="button" class="btn btn-danger btn-sm ml-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
+            $btn .= '<div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle ml-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-cog fe-12"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Pasang</a>
+                    <a class="dropdown-item" href="#">Selesai Pasang</a>
+                    <a class="dropdown-item" href="#">Pending</a>
+                    <a class="dropdown-item" href="#">Tidak Pasang</a>
+                    </div>
+                    </div>';
 
             $result[] = [
-                'nama' => $nama,
-                'alamat' => $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan,
-                'no_wa' => $item->no_wa,
+                'nama' => 'Nama: ' . $nama . '<br>' . 'No. WA: ' . $item->no_wa . '<br>' . 'Alamat: ' . $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan,
                 'kecamatan' => $item->kecamatan,
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'created_at' => $item->created_at->format('Y-m-d H:i:s'),
-                // 'status' => $status,
-                'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>' . $btn,
+                'status' => $status,
+                'button' => $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
             ];
             $counter++;

@@ -18,13 +18,12 @@
                 <table class="table datatables" id="data_table">
                     <thead style="font-size: 14px;">
                         <tr>
-                            <th>Nama</th>
-                            <th>No WA</th>
-                            <th>Alamat</th>
+                            <th>Pelanggan</th>
                             <th>Paket</th>
                             <th>Rekomendasi</th>
-                            <th>Created At</th>
-                            <th>Action</th>
+                            <th>Tgl Registrasi</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody style="font-size: 12px;"></tbody>
@@ -73,14 +72,6 @@
                         name: 'Name'
                     },
                     {
-                        data: 'no_wa',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'alamat',
-                        name: 'Description'
-                    },
-                    {
                         data: 'paket',
                         name: 'Description'
                     },
@@ -93,8 +84,8 @@
                         name: 'Created At'
                     },
                     {
-                        data: 'rekomendasi',
-                        name: 'Description'
+                        data: 'status',
+                        name: 'Status'
                     },
                     {
                         data: 'button',
@@ -103,11 +94,11 @@
                     // Tambahkan kolom lain sesuai kebutuhan
                 ],
                 'columnDefs': [{
-                    "targets": [6], // your case first column
+                    "targets": [4], // your case first column
                     "className": "text-center",
                 }],
                 order: [
-                    [5, 'desc']
+                    [3, 'desc']
                 ],
                 processing: true,
                 responsive: true,
