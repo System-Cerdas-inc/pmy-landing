@@ -130,6 +130,7 @@ return [
     'api_wa_token' => env('WA_TOKEN'),
 
     'api_wa_group' => env('WA_GROUP_ID'),
+    'api_wa_pasang_group' => env('WA_GROUP_PASANG_ID'),
 
     /*
     |--------------------------------------------------------------------------

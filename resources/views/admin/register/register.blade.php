@@ -18,13 +18,12 @@
                 <table class="table datatables" id="data_table">
                     <thead style="font-size: 14px;">
                         <tr>
-                            <th>Nama</th>
-                            <th>No WA</th>
-                            <th>Alamat</th>
+                            <th>Pelanggan</th>
                             <th>Paket</th>
                             <th>Rekomendasi</th>
-                            <th>Created At</th>
-                            <th>Action</th>
+                            <th>Tanggal Daftar</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody style="font-size: 12px;"></tbody>
@@ -49,6 +48,10 @@
                         <input readonly hidden class="form-control" id="id_confirm" name="id_confirm">
                         <input readonly hidden class="form-control" id="kondisi" name="kondisi">
                         <div id="text_confirm"></div>
+                        <div id="date_pasang_container" class="form-group" style="display: none;">
+                            <label for="tanggal_pasang">Tanggal Pasang</label>
+                            <input type="date" class="form-control" id="tanggal_pasang" name="tanggal_pasang" required>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -73,14 +76,6 @@
                         name: 'Name'
                     },
                     {
-                        data: 'no_wa',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'alamat',
-                        name: 'Description'
-                    },
-                    {
                         data: 'paket',
                         name: 'Description'
                     },
@@ -93,8 +88,8 @@
                         name: 'Created At'
                     },
                     {
-                        data: 'rekomendasi',
-                        name: 'Description'
+                        data: 'status',
+                        name: 'Status'
                     },
                     {
                         data: 'button',
@@ -103,11 +98,11 @@
                     // Tambahkan kolom lain sesuai kebutuhan
                 ],
                 'columnDefs': [{
-                    "targets": [6], // your case first column
+                    "targets": [4], // your case first column
                     "className": "text-center",
                 }],
                 order: [
-                    [5, 'desc']
+                    [3, 'desc']
                 ],
                 processing: true,
                 responsive: true,
@@ -131,7 +126,8 @@
 
             $('#text_confirm').html('Anda yakin ingin mengaktifkan user dengan nama <b>' + nama + '</b>?');
             $('[name="id_confirm"]').val(id);
-            $('[name="kondisi"]').val('aktif');
+            $('[name="kondisi"]').val('1');
+            $('#date_pasang_container').hide(); // Hide the date input
             pesan = 'aktifasi';
         }
 
@@ -142,8 +138,45 @@
 
             $('#text_confirm').html('Anda yakin ingin menghapus user dengan nama <b>' + nama + '</b>?');
             $('[name="id_confirm"]').val(id);
-            $('[name="kondisi"]').val('nonaktif');
+            $('[name="kondisi"]').val('0');
+            $('#date_pasang_container').hide(); // Hide the date input
             pesan = 'penghapusan';
+        }
+
+        function btn_pasang(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin proses instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('2');
+            $('#date_pasang_container').show(); // Show the date input
+            pesan = 'proses instalasi';
+        }
+
+        function btn_tidak_pasang(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin tidak memproses instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('3');
+            $('#date_pasang_container').hide(); // Hide the date input
+            pesan = 'tidak memproses instalasi';
+        }
+
+        function btn_pending(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin pending instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('4');
+            $('#date_pasang_container').hide(); // Hide the date input
+            pesan = 'pending instalasi';
         }
 
         function confirm() {

@@ -32,6 +32,32 @@ trait WaNotification
         }
     }
 
+    protected function sendToAdminPasang($dataRegistrasi)
+    {
+        $message = "Silahkan lakukan pemasangan pada tanggal " . $dataRegistrasi->tanggal_pasang . ", untuk data pelangan berikut:{nl}";
+        $message .= "Nama : *" . $dataRegistrasi->nama . "*{nl}";
+        $message .= "Alamat : *" . $dataRegistrasi->alamat . "*{nl}";
+        $message .= "Kelurahan : *" . $dataRegistrasi->kelurahan . "*{nl}";
+        $message .= "Kecamatan : *" . $dataRegistrasi->kecamatan . "*{nl}";
+        $message .= "Nomor Whatsapp : *" . $dataRegistrasi->nomor_whatsapp . "*{nl}";
+        $message .= "Paket : *" . $dataRegistrasi->paket . "*{nl}";
+        $message .= "Biaya Pemasangan : *" . $dataRegistrasi->biaya_pemasangan . "*{nl}";
+        $message .= "Rekomendasi dari : *" . $dataRegistrasi->rekomendasi . "*{nl}{nl}";
+
+        $body = str_replace('{nl}', '%0a', $message);
+
+
+        try {
+            $response = $this->sendMessageGroupPasang($body, );
+            return $response;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+    }
+
     protected function sendToClient($client)
     {
         $message = "Terimaksih sudah mendaftar untuk pemasangan internet, di link paket.digitaljb.com{nl}{nl}";
@@ -89,6 +115,36 @@ trait WaNotification
         $url = config('app.api_wa_host');
         $token = config('app.api_wa_token');
         $number = config('app.api_wa_group');
+
+        try {
+            $response = Http::timeout(120)
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . $token,
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($url, [
+                    'recipient_type' => 'group',
+                    'to' => $number,
+                    'type' => 'text',
+                    'text' => [
+                        'body' => urldecode($message)
+                    ]
+                ]);
+
+            return json_decode($response->body());
+        } catch (\Throwable $th) {
+            return [
+                'status' => false,
+                'message' => "Terjadi kesalahan saat memproses permintaan {$th}"
+            ];
+        }
+    }
+
+    protected function sendMessageGroupPasang($message)
+    {
+        $url = config('app.api_wa_host');
+        $token = config('app.api_wa_token');
+        $number = config('app.api_wa_pasang_group');
 
         try {
             $response = Http::timeout(120)
