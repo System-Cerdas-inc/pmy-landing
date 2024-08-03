@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\EncryptionHelper;
+use App\Http\Library\WaNotification;
 
 class AdminDashboardController extends Controller
 {
+    use WaNotification;
+
     protected $encryptionHelper;
 
     public function __construct()
@@ -261,34 +264,15 @@ class AdminDashboardController extends Controller
 
     public function status_register(Request $request)
     {
-        switch ($request->input('kondisi')) {
-            case 'aktif':
-                $data_status = '1';
-                break;
-            case 'pasang':
-                $data_status = '2';
-                break;
-            case 'tidak_pasang':
-                $data_status = '3';
-                break;
-            case 'pending':
-                $data_status = '4';
-                break;
-            default:
-                $data_status = '0';
-                break;
-        }
-
-        // handle error jika satatus sudah exist
-        if(!in_array($data_status, ['0', '1', '2', '3', '4'])) {
-            return response()->json(['status' => 'error']);
-        }
-
         // Temukan paket berdasarkan ID
         $data = RegisterModel::findOrFail($request->input('id_confirm'));
-        $data->status = $data_status;
-        $data->tanggal_pasang = $data_status == '2' ? $request->input('tanggal_pasang') : null;
+        $data->status = $request->input('kondisi');
+        $data->tanggal_pasang = $request->input('kondisi') == '2' ? $request->input('tanggal_pasang') : null;
         $simpan = $data->save();
+
+        if ($request->input('kondisi') == '2') {
+            $this->sendToAdminPasang($data);
+        }
 
         if ($simpan) {
             return response()->json(['status' => 'success']);
