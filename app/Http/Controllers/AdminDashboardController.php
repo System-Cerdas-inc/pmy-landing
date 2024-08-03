@@ -252,6 +252,7 @@ class AdminDashboardController extends Controller
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'created_at' => $item->updated_at->format('Y-m-d H:i:s'),
+                'tanggal_pasang' => $item->tanggal_pasang,
                 'status' => $status,
                 'button' => $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
