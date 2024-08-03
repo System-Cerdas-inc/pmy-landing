@@ -48,6 +48,14 @@
                         <input readonly hidden class="form-control" id="id_confirm" name="id_confirm">
                         <input readonly hidden class="form-control" id="kondisi" name="kondisi">
                         <div id="text_confirm"></div>
+                        <div id="date_pasang_container" class="form-group" style="display: none;">
+                            <label for="tanggal_pasang">Tanggal Pasang</label>
+                            <input type="date" class="form-control" id="tanggal_pasang" name="tanggal_pasang" required>
+                        </div>
+                        <div id="date_selesai_container" class="form-group" style="display: none;">
+                            <label for="tanggal_selesai">Tanggal Selesai Pasang</label>
+                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -135,6 +143,52 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('nonaktif');
             pesan = 'penghapusan';
+        }
+
+        function btn_pasang(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin proses instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('proses_pasang');
+            $('#date_pasang_container').show(); // Show the date input
+            pesan = 'proses instalasi';
+        }
+
+        function btn_selesai(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin menyelesaikan proses instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('selesai_pasang');
+            $('#date_selesai_container').show(); // Show the date input
+            pesan = 'selesaikan proses instalasi';
+        }
+
+        function btn_tidak_pasang(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin tidak memproses instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('tidak_pasang');
+            pesan = 'tidak memproses instalasi';
+        }
+
+        function btn_pending(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin pending instalasi paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('pending');
+            pesan = 'pending instalasi';
         }
 
         function confirm() {

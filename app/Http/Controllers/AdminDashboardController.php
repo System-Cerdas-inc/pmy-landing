@@ -234,10 +234,10 @@ class AdminDashboardController extends Controller
                     <span class="fas fa-cog fe-12"></span>
                     </button>
                     <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Pasang</a>
-                    <a class="dropdown-item" href="#">Selesai Pasang</a>
-                    <a class="dropdown-item" href="#">Pending</a>
-                    <a class="dropdown-item" href="#">Tidak Pasang</a>
+                    <a class="dropdown-item" onclick="btn_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Pasang</a>
+                    <a class="dropdown-item" onclick="btn_selesai(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Selesai Pasang</a>
+                    <a class="dropdown-item" onclick="btn_pending(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Pending</a>
+                    <a class="dropdown-item" onclick="btn_tidak_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Tidak Pasang</a>
                     </div>
                     </div>';
 
