@@ -34,7 +34,7 @@ trait WaNotification
 
     protected function sendToAdminPasang($dataRegistrasi)
     {
-        $message = "Silahkan lakukan pemasangan pada tanggal " . $dataRegistrasi->tanggal_pasang . ", untuk data pelangan berikut:{nl}{nl}";
+        $message = "Silahkan lakukan pemasangan internet pada tanggal " . $dataRegistrasi->tanggal_pasang . ", untuk data pelanggan berikut:{nl}{nl}";
         $message .= "Nama : *" . $dataRegistrasi->nama . "*{nl}";
         $message .= "Alamat : *" . $dataRegistrasi->alamat . "*{nl}";
         $message .= "Kelurahan : *" . $dataRegistrasi->kelurahan . "*{nl}";

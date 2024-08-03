@@ -228,7 +228,7 @@ class AdminDashboardController extends Controller
                     <span class="fas fa-edit fe-12"></span>
                     </button>';
 
-            if ($item->status == 1) {
+            if (in_array($item->status, [1, 3, 4])) {
                 $btn .= '<button type="button" class="btn btn-danger btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
             } elseif ($item->status == 0) {
                 $btn .= '<button type="button" class="btn btn-success btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
@@ -253,6 +253,7 @@ class AdminDashboardController extends Controller
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'created_at' => $item->updated_at->format('Y-m-d H:i:s'),
                 'tanggal_pasang' => $item->tanggal_pasang,
+                'keterangan' => $item->keterangan,
                 'status' => $status,
                 'button' => $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
@@ -269,6 +270,7 @@ class AdminDashboardController extends Controller
         $data = RegisterModel::findOrFail($request->input('id_confirm'));
         $data->status = $request->input('kondisi');
         $data->tanggal_pasang = $request->input('kondisi') == '2' ? $request->input('tanggal_pasang') : null;
+        $data->keterangan = in_array($request->input('kondisi'), ['3', '4']) ? $request->input('keterangan') : null;
         $simpan = $data->save();
 
         if ($request->input('kondisi') == '2') {
