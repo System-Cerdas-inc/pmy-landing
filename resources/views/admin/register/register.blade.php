@@ -127,6 +127,7 @@
             $('#text_confirm').html('Anda yakin ingin mengaktifkan user dengan nama <b>' + nama + '</b>?');
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('aktif');
+            $('#date_pasang_container').hide(); // Hide the date input
             pesan = 'aktifasi';
         }
 
@@ -138,6 +139,7 @@
             $('#text_confirm').html('Anda yakin ingin menghapus user dengan nama <b>' + nama + '</b>?');
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('nonaktif');
+            $('#date_pasang_container').hide(); // Hide the date input
             pesan = 'penghapusan';
         }
 
@@ -161,6 +163,7 @@
             $('#text_confirm').html('Anda yakin ingin tidak memproses instalasi paket dengan nama <b>' + nama + '</b>?');
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('tidak_pasang');
+            $('#date_pasang_container').hide(); // Hide the date input
             pesan = 'tidak memproses instalasi';
         }
 
@@ -172,6 +175,7 @@
             $('#text_confirm').html('Anda yakin ingin pending instalasi paket dengan nama <b>' + nama + '</b>?');
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('pending');
+            $('#date_pasang_container').hide(); // Hide the date input
             pesan = 'pending instalasi';
         }
 

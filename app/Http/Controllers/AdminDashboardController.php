@@ -202,22 +202,22 @@ class AdminDashboardController extends Controller
             switch ($item->status) {
                     //aktif
                 case '1':
-                    $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check-circle"></i></span>';
+                    $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check-circle"></i> Aktif</span>';
                     break;
                     //proses pasang
                 case '2':
-                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-check"></i></span>';
+                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-check"></i> Pasang</span>';
                     break;
                     //tidak pasang
                 case '3':
-                    $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-times"></i></span>';
+                    $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-times"></i> Tidak Pasang</span>';
                     break;
                     //pending
                 case '4':
-                    $status = '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i></span>';
+                    $status = '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i> Pending</span>';
                     break;
                 default:
-                    $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-ban"></i></span>';
+                    $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-ban"></i> Tidak Aktif</span>';
                     break;
             }
 
@@ -277,6 +277,11 @@ class AdminDashboardController extends Controller
             default:
                 $data_status = '0';
                 break;
+        }
+
+        // handle error jika satatus sudah exist
+        if(!in_array($data_status, ['0', '1', '2', '3', '4'])) {
+            return response()->json(['status' => 'error']);
         }
 
         // Temukan paket berdasarkan ID
