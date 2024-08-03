@@ -21,8 +21,9 @@
                             <th>Pelanggan</th>
                             <th>Paket</th>
                             <th>Rekomendasi</th>
-                            <th>Tanggal Daftar</th>
-                            <th>Tanggal Pasang</th>
+                            <th>Tgl Daftar</th>
+                            <th>Tgl Pasang</th>
+                            <th>Keterangan</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -52,6 +53,10 @@
                         <div id="date_pasang_container" class="form-group" style="display: none;">
                             <label for="tanggal_pasang">Tanggal Pasang</label>
                             <input type="date" class="form-control" id="tanggal_pasang" name="tanggal_pasang" required>
+                        </div>
+                        <div id="date_keterangan_container" class="form-group" style="display: none;">
+                            <label for="keterangan">Keterangan</label>
+                            <textarea class="form-control" id="keterangan" name="keterangan" required></textarea>
                         </div>
                     </form>
                 </div>
@@ -91,6 +96,10 @@
                     {
                         data: 'tanggal_pasang',
                         name: 'Tanggal Pasang'
+                    },
+                    {
+                        data: 'keterangan',
+                        name: 'Keterangan'
                     },
                     {
                         data: 'status',
@@ -133,6 +142,7 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('1');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'aktifasi';
         }
 
@@ -145,6 +155,7 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('0');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'penghapusan';
         }
 
@@ -157,6 +168,7 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('2');
             $('#date_pasang_container').show(); // Show the date input
+            $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'proses instalasi';
         }
 
@@ -169,6 +181,7 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('3');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_keterangan_container').show(); // Show the keterangan input
             pesan = 'tidak memproses instalasi';
         }
 
@@ -181,6 +194,7 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('4');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_keterangan_container').show(); // Show the keterangan input
             pesan = 'pending instalasi';
         }
 
