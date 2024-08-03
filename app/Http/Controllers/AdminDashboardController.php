@@ -190,7 +190,7 @@ class AdminDashboardController extends Controller
 
     public function show_table_register()
     {
-        $data = RegisterModel::orderBy('updated_at', 'desc')->get();
+        $data = RegisterModel::where('status', '!=', 0)->orderBy('updated_at', 'desc')->get();
 
         $result = [];
         $counter = 1;
