@@ -22,6 +22,7 @@
                             <th>Paket</th>
                             <th>Rekomendasi</th>
                             <th>Tanggal Daftar</th>
+                            <th>Tanggal Pasang</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -86,6 +87,10 @@
                     {
                         data: 'created_at',
                         name: 'Created At'
+                    },
+                    {
+                        data: 'tanggal_pasang',
+                        name: 'Tanggal Pasang'
                     },
                     {
                         data: 'status',
