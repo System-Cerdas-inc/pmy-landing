@@ -187,7 +187,7 @@ class AdminDashboardController extends Controller
 
     public function show_table_register()
     {
-        $data = RegisterModel::where('status', '1')->orderBy('created_at', 'desc')->get();
+        $data = RegisterModel::orderBy('created_at', 'desc')->get();
 
         $result = [];
         $counter = 1;
@@ -198,20 +198,39 @@ class AdminDashboardController extends Controller
             if (!empty($item->paket)) {
                 $paket = PaketModel::find($item->paket);
             }
-            //status selesai = icon checklist
-            $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check"></i></span>';
-            //status pending = icon tanda seru
-            $status .= '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i></span>';
-            //status pasang = icon process
-            $status .= '<span class="badge badge-pill badge-primary"><i class="fas fa-spinner"></i></span>';
-            //status tidak pasang = icon cross
-            $status .= '<span class="badge badge-pill badge-danger"><i class="fas fa-times"></i></span>';
+
+            switch ($item->status) {
+                //aktif
+                case '1':
+                    $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check-circle"></i></span>';
+                    break;
+                //proses pasang
+                case '2':
+                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-spinner"></i></span>';
+                    break;
+                //selesai pasang
+                case '3':
+                    $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check"></i></span>';
+                    break;
+                //tidak pasang
+                case '4':
+                    $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-times"></i></span>';
+                    break;
+                //pending
+                case '5':
+                    $status = '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i></span>';
+                    break;
+                default:
+                    $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-ban"></i></span>';
+                    break;
+            }
+            
             $btn = '<button type="button" class="btn btn-warning btn-sm" alt="Edit" onclick="modal_edit(' . "'" . $item->id . "'" . ')">
                     <span class="fas fa-edit fe-12"></span>
                     </button>';
-            $btn .= '<button type="button" class="btn btn-danger btn-sm ml-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
+            $btn .= '<button type="button" class="btn btn-danger btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
             $btn .= '<div class="btn-group">
-                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle ml-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle mt-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="fas fa-cog fe-12"></span>
                     </button>
                     <div class="dropdown-menu">
@@ -241,12 +260,27 @@ class AdminDashboardController extends Controller
 
     public function status_register(Request $request)
     {
-        //check status
-        if ($request->input('kondisi') == 'aktif') {
-            $data_status = '1';
-        } else {
-            $data_status = '2';
+        switch ($request->input('kondisi')) {
+            case 'aktif':
+                $data_status = '1';
+                break;
+            case 'proses_pasang':
+                $data_status = '2';
+                break;
+            case 'selesai_pasang':
+                $data_status = '3';
+                break;
+            case 'tidak_pasang':
+                $data_status = '4';
+                break;
+            case 'pending':
+                $data_status = '5';
+                break;
+            default:
+                $data_status = '0';
+                break;
         }
+
         // Temukan paket berdasarkan ID
         $data = RegisterModel::findOrFail($request->input('id_confirm'));
         $data->status = $data_status;
