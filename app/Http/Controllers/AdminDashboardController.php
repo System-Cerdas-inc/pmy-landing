@@ -272,7 +272,22 @@ class AdminDashboardController extends Controller
         $simpan = $data->save();
 
         if ($request->input('kondisi') == '2') {
-            $this->sendToAdminPasang($data);
+
+            $paket = PaketModel::find($data->paket);
+
+            $registration = (object)[
+                'nama' => $data->nama_depan . ' ' . $data->nama_belakang,
+                'alamat' => $data->alamat,
+                'kelurahan' => $data->kelurahan,
+                'kecamatan' => $data->kecamatan,
+                'nomor_whatsapp' => $this->cleanNumber($data->no_wa),
+                'paket' => $paket ? $paket->nama : 'Belum dipilih',
+                'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
+                'rekomendasi' => $data->rekomendasi,
+                'tanggal_pasang' => $data->tanggal_pasang
+            ];
+
+            $this->sendToAdminPasang($registration);
         }
 
         if ($simpan) {
@@ -325,5 +340,13 @@ class AdminDashboardController extends Controller
                 'alert-type' => 'error'
             ]);
         }
+    }
+
+    //buat function untuk clean nomor whatsapp pake regex
+    public function cleanNumber($number)
+    {
+        //- hapus spasi, strip, dan karakter selain angka
+        $cleaned = preg_replace('/[^0-9]/', '', $number);
+        return $cleaned;
     }
 }

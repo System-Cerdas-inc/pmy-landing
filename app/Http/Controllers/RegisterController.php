@@ -90,43 +90,32 @@ class RegisterController extends Controller
         $paket = PaketModel::find($request->paket);
 
         // Send data klien
-        $clients = collect([
-            (object)[
-                'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
-                'alamat' => $request->alamat,
-                'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
-                'no_telp' => $this->cleanNumber($request->no_wa)
-            ],
-        ]);
+        $client = (object)[
+            'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
+            'alamat' => $request->alamat,
+            'paket' => $paket ? $paket->nama : 'Belum dipilih',
+            'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
+            'no_telp' => $this->cleanNumber($request->no_wa)
+        ];
 
-        $responses = [];
+        $this->sendToClient($client);
 
-        foreach ($clients as $client) {
-            $response = $this->sendToClient($client);
-            $responses[] = $response;
-        }
 
         // Send data registrasi
-        $registrations = collect([
-            (object)[
-                'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
-                'alamat' => $request->alamat,
-                'kelurahan' => $request->kelurahan,
-                'kecamatan' => $request->kecamatan,
-                'nomor_whatsapp' => $this->cleanNumber($request->no_wa),
-                'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
-                'rekomendasi' => $request->rekomendasi
-            ],
-        ]);
+        $registration = (object)[
+            'nama' => $request->nama_depan . ' ' . $request->nama_belakang,
+            'alamat' => $request->alamat,
+            'kelurahan' => $request->kelurahan,
+            'kecamatan' => $request->kecamatan,
+            'nomor_whatsapp' => $this->cleanNumber($request->no_wa),
+            'paket' => $paket ? $paket->nama : 'Belum dipilih',
+            'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
+            'rekomendasi' => $request->rekomendasi
+        ];
 
-        $responses = [];
 
-        foreach ($registrations as $registration) {
-            $response = $this->sendToAdmin($registration);
-            $responses[] = $response;
-        }
+        $this->sendToAdmin($registration);
+
 
         // Redirect atau berikan respons bahwa data berhasil disimpan
         return redirect()->route('register')->with([
