@@ -21,7 +21,7 @@
                             <th>Pelanggan</th>
                             <th>Paket</th>
                             <th>Rekomendasi</th>
-                            <th>Tgl Registrasi</th>
+                            <th>Tanggal Daftar</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -51,10 +51,6 @@
                         <div id="date_pasang_container" class="form-group" style="display: none;">
                             <label for="tanggal_pasang">Tanggal Pasang</label>
                             <input type="date" class="form-control" id="tanggal_pasang" name="tanggal_pasang" required>
-                        </div>
-                        <div id="date_selesai_container" class="form-group" style="display: none;">
-                            <label for="tanggal_selesai">Tanggal Selesai Pasang</label>
-                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
                         </div>
                     </form>
                 </div>
@@ -155,18 +151,6 @@
             $('[name="kondisi"]').val('proses_pasang');
             $('#date_pasang_container').show(); // Show the date input
             pesan = 'proses instalasi';
-        }
-
-        function btn_selesai(id, nama) {
-            $('#form_confirm')[0].reset(); // reset form on modals
-            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
-            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
-
-            $('#text_confirm').html('Anda yakin ingin menyelesaikan proses instalasi paket dengan nama <b>' + nama + '</b>?');
-            $('[name="id_confirm"]').val(id);
-            $('[name="kondisi"]').val('selesai_pasang');
-            $('#date_selesai_container').show(); // Show the date input
-            pesan = 'selesaikan proses instalasi';
         }
 
         function btn_tidak_pasang(id, nama) {

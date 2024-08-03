@@ -187,7 +187,7 @@ class AdminDashboardController extends Controller
 
     public function show_table_register()
     {
-        $data = RegisterModel::orderBy('created_at', 'desc')->get();
+        $data = RegisterModel::orderBy('updated_at', 'desc')->get();
 
         $result = [];
         $counter = 1;
@@ -200,54 +200,55 @@ class AdminDashboardController extends Controller
             }
 
             switch ($item->status) {
-                //aktif
+                    //aktif
                 case '1':
                     $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check-circle"></i></span>';
                     break;
-                //proses pasang
+                    //proses pasang
                 case '2':
-                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-spinner"></i></span>';
+                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-check"></i></span>';
                     break;
-                //selesai pasang
+                    //tidak pasang
                 case '3':
-                    $status = '<span class="badge badge-pill badge-success"><i class="fas fa-check"></i></span>';
-                    break;
-                //tidak pasang
-                case '4':
                     $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-times"></i></span>';
                     break;
-                //pending
-                case '5':
+                    //pending
+                case '4':
                     $status = '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i></span>';
                     break;
                 default:
                     $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-ban"></i></span>';
                     break;
             }
-            
+
             $btn = '<button type="button" class="btn btn-warning btn-sm" alt="Edit" onclick="modal_edit(' . "'" . $item->id . "'" . ')">
                     <span class="fas fa-edit fe-12"></span>
                     </button>';
-            $btn .= '<button type="button" class="btn btn-danger btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
+
+            if ($item->status == 1) {
+                $btn .= '<button type="button" class="btn btn-danger btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
+            } elseif ($item->status == 0) {
+                $btn .= '<button type="button" class="btn btn-success btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
+            }
+
             $btn .= '<div class="btn-group">
                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle mt-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="fas fa-cog fe-12"></span>
                     </button>
                     <div class="dropdown-menu">
                     <a class="dropdown-item" onclick="btn_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Pasang</a>
-                    <a class="dropdown-item" onclick="btn_selesai(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Selesai Pasang</a>
                     <a class="dropdown-item" onclick="btn_pending(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Pending</a>
                     <a class="dropdown-item" onclick="btn_tidak_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Tidak Pasang</a>
                     </div>
                     </div>';
 
             $result[] = [
-                'nama' => 'Nama: ' . $nama . '<br>' . 'No. WA: ' . $item->no_wa . '<br>' . 'Alamat: ' . $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan,
+                'nama' => 'Nama: ' . $nama . '<br>' . 'No. WA: ' . $item->no_wa . '<br>' . 'Alamat: ' . $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan . '<br>' . 'Tanggal Pasang: ' . $item->tanggal_pasang,
                 'kecamatan' => $item->kecamatan,
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
+                'created_at' => $item->updated_at->format('Y-m-d H:i:s'),
                 'status' => $status,
                 'button' => $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
@@ -264,17 +265,14 @@ class AdminDashboardController extends Controller
             case 'aktif':
                 $data_status = '1';
                 break;
-            case 'proses_pasang':
+            case 'pasang':
                 $data_status = '2';
                 break;
-            case 'selesai_pasang':
+            case 'tidak_pasang':
                 $data_status = '3';
                 break;
-            case 'tidak_pasang':
-                $data_status = '4';
-                break;
             case 'pending':
-                $data_status = '5';
+                $data_status = '4';
                 break;
             default:
                 $data_status = '0';
@@ -284,6 +282,7 @@ class AdminDashboardController extends Controller
         // Temukan paket berdasarkan ID
         $data = RegisterModel::findOrFail($request->input('id_confirm'));
         $data->status = $data_status;
+        $data->tanggal_pasang = $data_status == '2' ? $request->input('tanggal_pasang') : null;
         $simpan = $data->save();
 
         if ($simpan) {
