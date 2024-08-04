@@ -10,7 +10,7 @@
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Tabel Pendaftaran</h6>
-            <button class="btn btn-danger" id="deleteSelected">Hapus Terpilih</button>
+            <button class="btn btn-danger btn-sm" id="deleteSelected"><i class="fa fa-trash"></i> Hapus Data</button>
         </div>
         <!-- Card Body -->
         <div class="card-body">
