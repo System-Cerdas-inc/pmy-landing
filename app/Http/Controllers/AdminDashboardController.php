@@ -246,12 +246,13 @@ class AdminDashboardController extends Controller
                     </div>';
 
             $result[] = [
+                'id' => '<input type="checkbox" class="selectRow" value="' . $item->id . '">',
                 'nama' => 'Nama: ' . $nama . '<br>' . 'No. WA: ' . $item->no_wa . '<br>' . 'Alamat: ' . $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan . '<br>' . 'Tanggal Pasang: ' . $item->tanggal_pasang,
                 'kecamatan' => $item->kecamatan,
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'created_at' => $item->updated_at->format('Y-m-d H:i:s'),
+                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
                 'tanggal_pasang' => $item->tanggal_pasang,
                 'keterangan' => $item->keterangan,
                 'status' => $status,
@@ -298,6 +299,22 @@ class AdminDashboardController extends Controller
             return response()->json(['status' => 'error']);
         }
     }
+
+    public function delete_masal_register(Request $request)
+    {
+        $ids = $request->input('ids');
+        $data = RegisterModel::whereIn('id', $ids)->get();
+
+        foreach ($data as $item) {
+            if (in_array($item->status, [1, 3, 4])) {
+                $item->status = 0; // Mengubah status menjadi 'Nonaktif'
+            }
+            $item->save();
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'Data berhasil diubah statusnya.']);
+    }
+
 
     public function update_register(Request $request)
     {
