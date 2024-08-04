@@ -10,6 +10,7 @@
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Tabel Pendaftaran</h6>
+            <button class="btn btn-danger" id="deleteSelected">Hapus Terpilih</button>
         </div>
         <!-- Card Body -->
         <div class="card-body">
@@ -18,6 +19,7 @@
                 <table class="table datatables" id="data_table">
                     <thead style="font-size: 14px;">
                         <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
                             <th>Pelanggan</th>
                             <th>Paket</th>
                             <th>Rekomendasi</th>
@@ -34,8 +36,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal_confirm" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modal_confirm" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -62,8 +63,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-primary" id="btn_confirm" onclick="confirm();"><span
-                            class="d-none d-sm-block">Ya</span></button>
+                    <button type="button" class="btn btn-primary" id="btn_confirm" onclick="confirm_hapus();"><span class="d-none d-sm-block">Ya</span></button>
                 </div>
             </div>
         </div>
@@ -77,53 +77,88 @@
                     url: "{{ route('table-pendaftaran') }}",
                     type: 'GET'
                 },
-                columns: [{
-                        data: 'nama',
-                        name: 'Name'
-                    },
-                    {
-                        data: 'paket',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'rekomendasi',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'Created At'
-                    },
-                    {
-                        data: 'tanggal_pasang',
-                        name: 'Tanggal Pasang'
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'Keterangan'
-                    },
-                    {
-                        data: 'status',
-                        name: 'Status'
-                    },
-                    {
-                        data: 'button',
-                        name: 'Button'
-                    }
-                    // Tambahkan kolom lain sesuai kebutuhan
+                columns: [
+                    { data: 'id', name: 'ID', orderable: false, searchable: false},
+                    { data: 'nama', name: 'Name' },
+                    { data: 'paket', name: 'Description' },
+                    { data: 'rekomendasi', name: 'Description' },
+                    { data: 'created_at', name: 'Created At' },
+                    { data: 'tanggal_pasang', name: 'Tanggal Pasang' },
+                    { data: 'keterangan', name: 'Keterangan' },
+                    { data: 'status', name: 'Status' },
+                    { data: 'button', name: 'Button' }
                 ],
                 'columnDefs': [{
-                    "targets": [4], // your case first column
+                    "targets": [4],
                     "className": "text-center",
                 }],
-                order: [
-                    [3, 'desc']
-                ],
+                order: [[3, 'desc']],
                 processing: true,
                 responsive: true,
                 autoWidth: true
-                // serverSide: true
+            });
+
+            $('#selectAll').on('click', function() {
+                $('.selectRow').prop('checked', this.checked);
+            });
+
+            $('#deleteSelected').on('click', function() {
+                var ids = [];
+                $('.selectRow:checked').each(function() {
+                    ids.push($(this).val());
+                });
+
+                if (ids.length > 0) {
+                    if (confirm('Apakah Anda yakin ingin menghapus data yang dipilih?')) {
+                        $.ajax({
+                            url: "{{ route('delete-masal-pendaftaran') }}",
+                            type: 'POST',
+                            data: {
+                                ids: ids,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                table.ajax.reload();
+                                toastr["success"]("Data pendaftaran berhasil dihapus.", "Success");
+                            },
+                            error: function(data) {
+                                toastr["error"]("Terjadi kesalahan saat menghapus data.", "Failed");
+                            }
+                        });
+                    }
+                } else {
+                    alert('Silakan pilih data yang ingin dihapus.');
+                }
             });
         });
+
+        function confirm_hapus() {
+            $.ajax({
+                url: "{{ route('status-pendaftaran') }}", //link access data
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }, //Ini akan menambahkan token CSRF pada CUD
+                type: "POST", //action in form
+                dataType: "JSON", //accepted data types
+                data: $('#form_confirm').serialize(), //retrieve data from form
+                success: function(data) {
+                    //show notification
+                    if (data.status === "success") {
+                        toastr["success"]("Data register berhasil dilakukan " + pesan + ".", "Success");
+
+                        $('#form_confirm')[0].reset(); // reset form on modals
+                        $('#modal_confirm').modal('hide'); // show bootstrap modal
+                        reload();
+                    } else {
+                        toastr["error"]("Data register gagal dilakukan " + pesan + ", try again!", "Failed");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    toastr["error"]("check your internet connection and refresh this page again!" + jqXHR
+                        .responseText, "Failed");
+                }
+            });
+        }
 
         function reload() {
             table.ajax.reload(null, false); //reload datatable ajax
@@ -196,34 +231,6 @@
             $('#date_pasang_container').hide(); // Hide the date input
             $('#date_keterangan_container').show(); // Show the keterangan input
             pesan = 'pending instalasi';
-        }
-
-        function confirm() {
-            $.ajax({
-                url: "{{ route('status-pendaftaran') }}", //link access data
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }, //Ini akan menambahkan token CSRF pada CUD
-                type: "POST", //action in form
-                dataType: "JSON", //accepted data types
-                data: $('#form_confirm').serialize(), //retrieve data from form
-                success: function(data) {
-                    //show notification
-                    if (data.status === "success") {
-                        toastr["success"]("Data register berhasil dilakukan " + pesan + ".", "Success");
-
-                        $('#form_confirm')[0].reset(); // reset form on modals
-                        $('#modal_confirm').modal('hide'); // show bootstrap modal
-                        reload();
-                    } else {
-                        toastr["error"]("Data register gagal dilakukan " + pesan + ", try again!", "Failed");
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    toastr["error"]("check your internet connection and refresh this page again!" + jqXHR
-                        .responseText, "Failed");
-                }
-            });
         }
     </script>
 @endsection

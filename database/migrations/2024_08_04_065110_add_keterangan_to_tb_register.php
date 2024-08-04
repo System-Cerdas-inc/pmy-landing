@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tb_register', function (Blueprint $table) {
-            $table->string('keterangan')->nullable()->after('tanggal_pasang');
+            $table->text('keterangan')->nullable()->after('tanggal_pasang');
         });
     }
 

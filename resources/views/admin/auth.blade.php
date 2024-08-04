@@ -1,3 +1,9 @@
+@php
+    //cek jika sudah login
+    if (auth()->check()) {
+        echo "<script>window.location='" . route('dashboard') . "'</script>";
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
