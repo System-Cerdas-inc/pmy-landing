@@ -252,7 +252,7 @@ class AdminDashboardController extends Controller
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
+                'created_at' => $item->created_at->format('Y-m-d'),
                 'tanggal_pasang' => $item->tanggal_pasang,
                 'keterangan' => $item->keterangan,
                 'status' => $status,

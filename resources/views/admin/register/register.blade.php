@@ -89,10 +89,10 @@
                     { data: 'button', name: 'Button' }
                 ],
                 'columnDefs': [{
-                    "targets": [4],
+                    "targets": [7],
                     "className": "text-center",
                 }],
-                order: [[3, 'desc']],
+                // order: [[0, 'desc']],
                 processing: true,
                 responsive: true,
                 autoWidth: true
