@@ -22,7 +22,7 @@ class HomeController extends Controller
             ->first(); // Ambil data pertama yang cocok dengan kriteria di atas
 
         $data['data_paket'] = PaketModel::where('status', '1')
-            ->where('jenis', 'Regular')->take(4)->get();
+            ->where('jenis', 'Promo')->take(4)->get();
         $data['data_postingan'] = PostinganModel::where('jenis', 'Video')->get();
         $data['data_postingan_harga'] = '0';
 
