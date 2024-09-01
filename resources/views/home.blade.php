@@ -75,7 +75,7 @@
                             <div class="price"><sup>Rp.</sup>{{ number_format($item->harga) }}<span> / bulan</span></div>
                             <ul>
                                 <li>Kecepatan hingga {{ $item->kecepatan }} Mbps</li>
-                                @if ($item->nama == 'PAKET HEMAT')
+                                @if ($item->nama == 'Paket Hemat')
                                     <li>Maksimal Untuk 1 - {{ $item->device }} Device</li>
                                     <li>Kuota Unlimited</li>
                                     <li>Sistem Voucher Roaming</li>
