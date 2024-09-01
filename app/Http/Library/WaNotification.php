@@ -17,6 +17,7 @@ trait WaNotification
         $message .= "Paket : *" . $dataRegistrasi->paket . "*{nl}";
         $message .= "Biaya Pemasangan : *" . $dataRegistrasi->biaya_pemasangan . "*{nl}";
         $message .= "Rekomendasi dari : *" . $dataRegistrasi->rekomendasi . "*{nl}{nl}";
+        $message .= "Admin DjB Kuningan";
 
         $body = str_replace('{nl}', '%0a', $message);
 
@@ -34,15 +35,20 @@ trait WaNotification
 
     protected function sendToAdminPasang($dataRegistrasi)
     {
-        $message = "Silahkan lakukan pemasangan internet pada tanggal " . $dataRegistrasi->tanggal_pasang . ", untuk data pelanggan berikut:{nl}{nl}";
+        $message = "Terimakasih telah mengisi form pemasangan wifi di web paket.digitaljb.com  dengan rincian : {nl}{nl}";
+        $message .= "Pendaftaran Baru:{nl}";
         $message .= "Nama : *" . $dataRegistrasi->nama . "*{nl}";
         $message .= "Alamat : *" . $dataRegistrasi->alamat . "*{nl}";
         $message .= "Kelurahan : *" . $dataRegistrasi->kelurahan . "*{nl}";
         $message .= "Kecamatan : *" . $dataRegistrasi->kecamatan . "*{nl}";
         $message .= "Nomor Whatsapp : *" . $dataRegistrasi->nomor_whatsapp . "*{nl}";
         $message .= "Paket : *" . $dataRegistrasi->paket . "*{nl}";
-        $message .= "Biaya Pemasangan : *" . $dataRegistrasi->biaya_pemasangan . "*{nl}";
-        $message .= "Rekomendasi dari : *" . $dataRegistrasi->rekomendasi . "*{nl}{nl}";
+        $message .= "Biaya Pemasangan : *" . $dataRegistrasi->biaya_pemasangan . "*{nl}{nl}";
+        $message .= "yang akan kita jadwalkan survei dan pemasangan pada tanggal " . $dataRegistrasi->tanggal_pasang . ":{nl}";
+        $message .= "Bila jarak jauh dan tidak bsa terjangkau dengan jaringan kita saat ini maka akan dilakukan penjadwalan ulang, yang akan di infokan langsung oleh teknisi. 
+:{nl}";
+        $message .= "Mohon konfirmasi nya bila ingin membatalkan atau memindah jadwal pemasangannya. Terimakasih.{nl}{nl}";
+        $message .= "Admin DjB Kuningan";
 
         $body = str_replace('{nl}', '%0a', $message);
 
@@ -66,7 +72,8 @@ trait WaNotification
         $message .= "Paket : *" . $client->paket . "*{nl}";
         $message .= "Biaya Pemasangan : *" . $client->biaya_pemasangan . "*{nl}";
         $message .= "data sudah diterima, akan segera kami kabarin kembali ke nomer yang didaftarkan untuk jadwal pemasangannya.{nl}{nl}";
-        $message .= "Terima kasih.{nl}";
+        $message .= "Terima kasih.{nl}{nl}";
+        $message .= "Admin DjB Kuningan";
 
         $body = str_replace('{nl}', '%0a', $message);
 

@@ -190,7 +190,7 @@ class AdminDashboardController extends Controller
 
     public function show_table_register()
     {
-        $data = RegisterModel::where('status', '!=', 0)->orderBy('updated_at', 'desc')->get();
+        $data = RegisterModel::where('status', '!=', 0)->orderBy('created_at', 'desc')->get();
 
         $result = [];
         $counter = 1;
@@ -209,7 +209,7 @@ class AdminDashboardController extends Controller
                     break;
                     //proses pasang
                 case '2':
-                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-check"></i> Pasang</span>';
+                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-sync-alt"></i> Proses Pasang</span>';
                     break;
                     //tidak pasang
                 case '3':
@@ -218,6 +218,10 @@ class AdminDashboardController extends Controller
                     //pending
                 case '4':
                     $status = '<span class="badge badge-pill badge-warning"><i class="fas fa-exclamation-triangle"></i> Pending</span>';
+                    break;
+                    //terpasang
+                case '5':
+                    $status = '<span class="badge badge-pill badge-info"><i class="fas fa-check-circle"></i> Terpasang</span>';
                     break;
                 default:
                     $status = '<span class="badge badge-pill badge-danger"><i class="fas fa-ban"></i> Tidak Aktif</span>';
@@ -228,7 +232,7 @@ class AdminDashboardController extends Controller
                     <span class="fas fa-edit fe-12"></span>
                     </button>';
 
-            if (in_array($item->status, [1, 3, 4])) {
+            if (in_array($item->status, [1, 2, 3, 4, 5])) {
                 $btn .= '<button type="button" class="btn btn-danger btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-ban fe-12"></span></button>';
             } elseif ($item->status == 0) {
                 $btn .= '<button type="button" class="btn btn-success btn-sm mt-1" id="btn_nonaktif" alt="Nonaktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
@@ -239,7 +243,8 @@ class AdminDashboardController extends Controller
                     <span class="fas fa-cog fe-12"></span>
                     </button>
                     <div class="dropdown-menu">
-                    <a class="dropdown-item" onclick="btn_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Pasang</a>
+                    <a class="dropdown-item" onclick="btn_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Proses</a>
+                    <a class="dropdown-item" onclick="btn_terpasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Terpasang</a>
                     <a class="dropdown-item" onclick="btn_pending(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Pending</a>
                     <a class="dropdown-item" onclick="btn_tidak_pasang(' . "'" . $item->id . "'" . ', ' . "'" . $nama . "'" . ')">Tidak Pasang</a>
                     </div>
@@ -247,14 +252,13 @@ class AdminDashboardController extends Controller
 
             $result[] = [
                 'id' => '<input type="checkbox" class="selectRow" value="' . $item->id . '">',
-                'nama' => 'Nama: ' . $nama . '<br>' . 'No. WA: ' . $item->no_wa . '<br>' . 'Alamat: ' . $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan . '<br>' . 'Tanggal Pasang: ' . $item->tanggal_pasang,
+                'nama' => 'Nama: ' . $nama . '<br>' . 'No. WA: ' . $item->no_wa . '<br>' . 'Alamat: ' . $item->alamat . ', kel: ' . $item->kelurahan . ', kec: ' . $item->kecamatan,
                 'kecamatan' => $item->kecamatan,
                 'kelurahan' => $item->kelurahan,
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
-                'tanggal_pasang' => $item->tanggal_pasang,
-                'keterangan' => $item->keterangan,
+                'created_at' => $item->created_at->format('Y-m-d'),
+                'detail_pasang' => 'Tanggal Pasang' . ': ' . $item->tanggal_pasang . '<br>' . 'Tanggal Terpasang' . ': ' . $item->tanggal_terpasang . '<br>' . 'Nama Teknisi' . ': ' . $item->nama_teknisi . 'Keterangan' . ': ' . $item->keterangan,
                 'status' => $status,
                 'button' => $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
@@ -271,6 +275,8 @@ class AdminDashboardController extends Controller
         $data = RegisterModel::findOrFail($request->input('id_confirm'));
         $data->status = $request->input('kondisi');
         $data->tanggal_pasang = $request->input('kondisi') == '2' ? $request->input('tanggal_pasang') : null;
+        $data->tanggal_terpasang = $request->input('kondisi') == '5' ? $request->input('tanggal_terpasang') : null;
+        $data->nama_teknisi = $request->input('kondisi') == '5' ? $request->input('nama_teknisi_terpasang') : null;
         $data->keterangan = in_array($request->input('kondisi'), ['3', '4']) ? $request->input('keterangan') : null;
         $simpan = $data->save();
 
@@ -306,7 +312,7 @@ class AdminDashboardController extends Controller
         $data = RegisterModel::whereIn('id', $ids)->get();
 
         foreach ($data as $item) {
-            if (in_array($item->status, [1, 3, 4])) {
+            if (in_array($item->status, [1, 2, 3, 4, 5])) {
                 $item->status = 0; // Mengubah status menjadi 'Nonaktif'
             }
             $item->save();

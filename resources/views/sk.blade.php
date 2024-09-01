@@ -91,7 +91,7 @@
                 </tr>
                 <tr>
                     <td style="vertical-align:top;">18.</td>
-                    <td>DjBHome tidak bertanggung jawab atas pembayaran yang dilakukan oleh pelanggan ke rekening selain rekening resmi DjBHome (melalui Akun BRIVA). Karyawan DjBHome tidak diperbolehkan menerima imbalan atau pembayaran dalam bentuk apapun yang diberikan oleh pelanggan.</td>
+                    <td>DjBHome tidak bertanggung jawab atas pembayaran yang dilakukan oleh pelanggan ke rekening selain rekening resmi DjBHome (Melalui Member Area Client). Karyawan DjBHome tidak diperbolehkan menerima imbalan atau pembayaran dalam bentuk apapun yang diberikan oleh pelanggan.</td>
                 </tr>
             </table>
             <div class="php-email-form" style="background: white;">

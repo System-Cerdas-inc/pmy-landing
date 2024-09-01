@@ -24,8 +24,7 @@
                             <th>Paket</th>
                             <th>Rekomendasi</th>
                             <th>Tgl Daftar</th>
-                            <th>Tgl Pasang</th>
-                            <th>Keterangan</th>
+                            <th>Detail Pasang</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -55,6 +54,12 @@
                             <label for="tanggal_pasang">Tanggal Pasang</label>
                             <input type="date" class="form-control" id="tanggal_pasang" name="tanggal_pasang" required>
                         </div>
+                        <div id="date_terpasang_container" class="form-group" style="display: none;">
+                            <label for="tanggal_terpasang">Tanggal Terpasang</label>
+                            <input type="date" class="form-control" id="tanggal_terpasang" name="tanggal_terpasang" required>
+                            <label for="nama_teknisi_terpasang" class="mt-2">Nama Teknisi</label>
+                            <input type="text" class="form-control" id="nama_teknisi_terpasang" name="nama_teknisi_terpasang" required>
+                        </div>
                         <div id="date_keterangan_container" class="form-group" style="display: none;">
                             <label for="keterangan">Keterangan</label>
                             <textarea class="form-control" id="keterangan" name="keterangan" required></textarea>
@@ -83,16 +88,15 @@
                     { data: 'paket', name: 'Description' },
                     { data: 'rekomendasi', name: 'Description' },
                     { data: 'created_at', name: 'Created At' },
-                    { data: 'tanggal_pasang', name: 'Tanggal Pasang' },
-                    { data: 'keterangan', name: 'Keterangan' },
+                    { data: 'detail_pasang', name: 'Detail Pasang' },
                     { data: 'status', name: 'Status' },
                     { data: 'button', name: 'Button' }
                 ],
                 'columnDefs': [{
-                    "targets": [4],
+                    "targets": [7],
                     "className": "text-center",
                 }],
-                order: [[3, 'desc']],
+                // order: [[0, 'desc']],
                 processing: true,
                 responsive: true,
                 autoWidth: true
@@ -205,6 +209,20 @@
             $('#date_pasang_container').show(); // Show the date input
             $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'proses instalasi';
+        }
+
+        function btn_terpasang(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi Terpasang'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin menandai <b>' + nama + '</b> sebagai terpasang?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('5'); // Kondisi untuk terpasang
+            $('#date_pasang_container').hide(); // Hide the pasang container
+            $('#date_terpasang_container').show(); // Show the terpasang container
+            $('#date_keterangan_container').hide(); // Hide the keterangan input
+            pesan = 'menandai sebagai terpasang';
         }
 
         function btn_tidak_pasang(id, nama) {
