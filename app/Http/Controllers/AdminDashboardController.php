@@ -209,7 +209,7 @@ class AdminDashboardController extends Controller
                     break;
                     //proses pasang
                 case '2':
-                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-check"></i> Pasang</span>';
+                    $status = '<span class="badge badge-pill badge-primary"><i class="fas fa-check"></i> Proses</span>';
                     break;
                     //tidak pasang
                 case '3':
