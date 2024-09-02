@@ -57,6 +57,8 @@
                         <div id="date_terpasang_container" class="form-group" style="display: none;">
                             <label for="tanggal_terpasang">Tanggal Terpasang</label>
                             <input type="date" class="form-control" id="tanggal_terpasang" name="tanggal_terpasang" required>
+                        </div>
+                        <div id="nama_terpasang_container" class="form-group" style="display: none;">
                             <label for="nama_teknisi_terpasang" class="mt-2">Nama Teknisi</label>
                             <input type="text" class="form-control" id="nama_teknisi_terpasang" name="nama_teknisi_terpasang" required>
                         </div>
@@ -181,6 +183,8 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('1');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_terpasang_container').hide(); // Hide the terpasang container
+            $('#nama_terpasang_container').hide(); // Hide the nama terpasang container
             $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'aktifasi';
         }
@@ -194,6 +198,8 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('0');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_terpasang_container').hide(); // Hide the terpasang container
+            $('#nama_terpasang_container').hide(); // Hide the nama terpasang container
             $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'penghapusan';
         }
@@ -207,6 +213,8 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('2');
             $('#date_pasang_container').show(); // Show the date input
+            $('#date_terpasang_container').hide(); // Hide the terpasang container
+            $('#nama_terpasang_container').show(); // Show the nama terpasang container
             $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'proses instalasi';
         }
@@ -221,6 +229,7 @@
             $('[name="kondisi"]').val('5'); // Kondisi untuk terpasang
             $('#date_pasang_container').hide(); // Hide the pasang container
             $('#date_terpasang_container').show(); // Show the terpasang container
+            $('#nama_terpasang_container').show(); // Show the nama terpasang container
             $('#date_keterangan_container').hide(); // Hide the keterangan input
             pesan = 'menandai sebagai terpasang';
         }
@@ -234,6 +243,8 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('3');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_terpasang_container').hide(); // Hide the terpasang container
+            $('#nama_terpasang_container').hide(); // Hide the nama terpasang container
             $('#date_keterangan_container').show(); // Show the keterangan input
             pesan = 'tidak memproses instalasi';
         }
@@ -247,6 +258,8 @@
             $('[name="id_confirm"]').val(id);
             $('[name="kondisi"]').val('4');
             $('#date_pasang_container').hide(); // Hide the date input
+            $('#date_terpasang_container').hide(); // Hide the terpasang container
+            $('#nama_terpasang_container').show(); // Show the nama terpasang container
             $('#date_keterangan_container').show(); // Show the keterangan input
             pesan = 'pending instalasi';
         }
