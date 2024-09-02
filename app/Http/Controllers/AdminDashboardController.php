@@ -258,7 +258,7 @@ class AdminDashboardController extends Controller
                 'rekomendasi' => $item->rekomendasi,
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'created_at' => $item->created_at->format('Y-m-d'),
-                'detail_pasang' => 'Tanggal Pasang' . ': ' . $item->tanggal_pasang . '<br>' . 'Tanggal Terpasang' . ': ' . $item->tanggal_terpasang . '<br>' . 'Nama Teknisi' . ': ' . $item->nama_teknisi . 'Keterangan' . ': ' . $item->keterangan,
+                'detail_pasang' => 'Tanggal Pasang' . ': ' . $item->tanggal_pasang . '<br>' . 'Tanggal Terpasang' . ': ' . $item->tanggal_terpasang . '<br>' . 'Nama Teknisi' . ': ' . $item->nama_teknisi . '<br>' . 'Keterangan' . ': ' . $item->keterangan,
                 'status' => $status,
                 'button' => $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
