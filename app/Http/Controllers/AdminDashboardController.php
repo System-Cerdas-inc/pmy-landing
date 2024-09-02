@@ -272,15 +272,15 @@ class AdminDashboardController extends Controller
     public function status_register(Request $request)
     {
         // Temukan paket berdasarkan ID
-        $data = RegisterModel::findOrFail($request->input('id_confirm'));
-        $data->status = $request->input('kondisi');
-        $data->tanggal_pasang = $request->input('kondisi') == '2' ? $request->input('tanggal_pasang') : null;
-        $data->tanggal_terpasang = $request->input('kondisi') == '5' ? $request->input('tanggal_terpasang') : null;
-        $data->nama_teknisi = in_array($request->input('kondisi'), ['2', '4', '5']) ? $request->input('nama_teknisi_terpasang') : null;
-        $data->keterangan = in_array($request->input('kondisi'), ['3', '4']) ? $request->input('keterangan') : null;
+        $data = RegisterModel::findOrFail($request->id_confirm);
+        $data->status = $request->kondisi;
+        $data->tanggal_pasang = $request->tanggal_pasang ? $request->tanggal_pasang : $data->tanggal_pasang;
+        $data->tanggal_terpasang = $request->tanggal_terpasang ? $request->tanggal_terpasang : $data->tanggal_terpasang;
+        $data->nama_teknisi = $request->nama_teknisi_terpasang ? $request->nama_teknisi_terpasang : $data->nama_teknisi;
+        $data->keterangan =  $request->keterangan ? $request->keterangan : $data->keterangan;
         $simpan = $data->save();
 
-        if ($request->input('kondisi') == '2') {
+        if ($request->kondisi == '2') { 
 
             $paket = PaketModel::find($data->paket);
 
@@ -312,7 +312,7 @@ class AdminDashboardController extends Controller
 
     public function delete_masal_register(Request $request)
     {
-        $ids = $request->input('ids');
+        $ids = $request->ids;
         $data = RegisterModel::whereIn('id', $ids)->get();
 
         foreach ($data as $item) {
