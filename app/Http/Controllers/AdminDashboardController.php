@@ -298,9 +298,9 @@ class AdminDashboardController extends Controller
             ];
 
             //kirim ke group admin
-            // $this->sendToAdminPasang($registration);
-            // //kirim ke customer
-            // $this->sendToClientPasang($registration);
+            $this->sendToAdminPasang($registration);
+            //kirim ke customer
+            $this->sendToClientPasang($registration);
         }
 
         if ($simpan) {
