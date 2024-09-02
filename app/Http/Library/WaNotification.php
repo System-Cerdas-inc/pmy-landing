@@ -35,6 +35,35 @@ trait WaNotification
 
     protected function sendToAdminPasang($dataRegistrasi)
     {
+        $message = "Silahkan lakukan pemasangan internet pada tanggal " . $dataRegistrasi->tanggal_pasang . ", untuk data pelanggan berikut: {nl}{nl}";
+        $message .= "Nama : *" . $dataRegistrasi->nama . "*{nl}";
+        $message .= "Alamat : *" . $dataRegistrasi->alamat . "*{nl}";
+        $message .= "Kelurahan : *" . $dataRegistrasi->kelurahan . "*{nl}";
+        $message .= "Kecamatan : *" . $dataRegistrasi->kecamatan . "*{nl}";
+        $message .= "Nomor Whatsapp : *" . $dataRegistrasi->nomor_whatsapp . "*{nl}";
+        $message .= "Paket : *" . $dataRegistrasi->paket . "*{nl}";
+        $message .= "Biaya Pemasangan : *" . $dataRegistrasi->biaya_pemasangan . "*{nl}";
+        $message .= "Rekomendasi dari : *" . $dataRegistrasi->rekomendasi . "*{nl}";
+        $message .= "Teknisi yang ditugaskan : *" . $dataRegistrasi->nama_teknisi . "*{nl}{nl}";
+        $message .= "Terimakasih.{nl}{nl}";
+        $message .= "Admin DjB Kuningan";
+
+        $body = str_replace('{nl}', '%0a', $message);
+
+
+        try {
+            $response = $this->sendMessageGroupPasang($body, );
+            return $response;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+    }
+
+    protected function sendToClientPasang($dataRegistrasi)
+    {
         $message = "Terimakasih telah mengisi form pemasangan wifi di web paket.digitaljb.com  dengan rincian : {nl}{nl}";
         $message .= "Pendaftaran Baru:{nl}";
         $message .= "Nama : *" . $dataRegistrasi->nama . "*{nl}";
@@ -54,7 +83,7 @@ trait WaNotification
 
 
         try {
-            $response = $this->sendMessageGroupPasang($body, );
+            $response =  $this->sendMessage($dataRegistrasi->nomor_whatsapp, $body);
             return $response;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             return response()->json([

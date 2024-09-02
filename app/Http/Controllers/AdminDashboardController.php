@@ -276,7 +276,7 @@ class AdminDashboardController extends Controller
         $data->status = $request->input('kondisi');
         $data->tanggal_pasang = $request->input('kondisi') == '2' ? $request->input('tanggal_pasang') : null;
         $data->tanggal_terpasang = $request->input('kondisi') == '5' ? $request->input('tanggal_terpasang') : null;
-        $data->nama_teknisi = $request->input('kondisi') == '5' ? $request->input('nama_teknisi_terpasang') : null;
+        $data->nama_teknisi = in_array($request->input('kondisi'), ['2', '4', '5']) ? $request->input('nama_teknisi_terpasang') : null;
         $data->keterangan = in_array($request->input('kondisi'), ['3', '4']) ? $request->input('keterangan') : null;
         $simpan = $data->save();
 
@@ -296,7 +296,10 @@ class AdminDashboardController extends Controller
                 'tanggal_pasang' => $data->tanggal_pasang
             ];
 
+            //kirim ke group admin
             $this->sendToAdminPasang($registration);
+            //kirim ke customer
+            $this->sendToClientPasang($registration);
         }
 
         if ($simpan) {
