@@ -71,7 +71,9 @@
                             @endif
 
                             <h2 style="color: #0dcaf0;">{{ $item->nama }}</h2>
+                            @if ($item->nama != 'Paket Hemat')
                             <h6>{{ $item->kecepatan }} Mbps</h6>
+                            @endif
                             <div class="price"><sup>Rp.</sup>{{ number_format($item->harga) }}<span> / bulan</span></div>
                             <ul>
                                 <li>Kecepatan hingga {{ $item->kecepatan }} Mbps</li>

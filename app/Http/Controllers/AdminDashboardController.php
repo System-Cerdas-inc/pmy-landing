@@ -293,7 +293,8 @@ class AdminDashboardController extends Controller
                 'paket' => $paket ? $paket->nama : 'Belum dipilih',
                 'biaya_pemasangan' => 'Rp. ' . number_format($paket->registrasi, 0, ',', '.'),
                 'rekomendasi' => $data->rekomendasi,
-                'tanggal_pasang' => $data->tanggal_pasang
+                'tanggal_pasang' => $data->tanggal_pasang,
+                'nama_teknisi' => $data->nama_teknisi
             ];
 
             //kirim ke group admin
