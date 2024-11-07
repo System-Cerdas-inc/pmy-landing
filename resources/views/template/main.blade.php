@@ -123,11 +123,11 @@
                         <span class="sitename"><img src="{{ asset('img/logo&text.png') }}" alt=""></span>
                     </a>
                     <div class="footer-contact pt-3">
-                        <p>Alamat HO : Desa Sindangagung Blok Pahing - Kuningan, Jawa Barat.</p>
-                        <p>Alamat Cabang Pelayanan : Jl. Siliwangi RT007 RW002, Karamatmulya, Ciawigebang, Kab. Kuningan.</p>
-                        <p><strong>Email:</strong> <span>djb@digitaljb.com</span></p>
-                        <p><strong>WA CS:</strong> <span><a href="https://wa.me/6085700600177" target="_blank">085700600177</a></span></p>
-                        <p><strong>Call CS:</strong> <span>085133339355</span></p>
+                        <p style="font-size: 10px;">Alamat HO : Desa Sindangagung Blok Pahing - Kuningan, Jawa Barat.</p>
+                        <p style="font-size: 10px;">Alamat Cabang Pelayanan : Jl. Siliwangi RT007 RW002, Karamatmulya, Ciawigebang, Kab. Kuningan.</p>
+                        <p style="font-size: 11px;"><strong>Email:</strong> <span>djb@digitaljb.com</span></p>
+                        <p style="font-size: 11px;"><strong>WA CS:</strong> <span>085700600177</span></p>
+                        <p style="font-size: 11px;"><strong>Call CS:</strong> <span>085133339355</span></p>
                     </div>
                 </div>
 
