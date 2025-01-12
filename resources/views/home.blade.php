@@ -89,7 +89,7 @@
                                 <li>Registrasi Rp.{{ number_format($item->registrasi) }}</li>
                                 <!-- <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li> -->
                             </ul>
-                            <a href="{{ route('register') }}" class="btn-buy">Daftar Sekarang</a>
+                            <a href="{{ route('register') }}?package={{ $item->id }}" class="btn-buy">Daftar Sekarang</a>
                         </div>
                     </div><!-- End Pricing Item -->
                 @endforeach
