@@ -40,7 +40,7 @@
                                 <li>Registrasi Rp.{{ number_format($item->registrasi, 0, ',', '.') }}</li>
                                 <!-- <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li> -->
                             </ul>
-                            <a href="{{ route('register') }}" class="btn-buy">Daftar Sekarang</a>
+                            <a href="{{ route('register') }}?package={{ Crypt::encrypt($item->id) }}" class="btn-buy">Daftar Sekarang</a>
                         </div>
                     </div><!-- End Pricing Item -->
                 @endforeach
