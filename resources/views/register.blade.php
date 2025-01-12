@@ -97,10 +97,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="paket">Pilih Paket<c style="color: red;">*</c></label>
-                            <select class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket">
+                            <select class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket" readonly>
                                 <option value="" selected>Pilih paket internet</option>
                                 @foreach($data_paket as $item)
-                                <option value="{{ $item->id }}" data-harga="{{ $item->registrasi }}" {{ old("paket") == $item->id ? 'selected' : '' }}>{{ $item->nama }} - Rp. {{ number_format($item->harga, 0, ',', '.') }}/bulan</option>
+                                <option value="{{ $item->id }}" data-harga="{{ $item->registrasi }}" @if (request('package') == $item->id) selected @endif>{{ $item->nama }} - Rp. {{ number_format($item->harga, 0, ',', '.') }}/bulan</option>
                                 @endforeach
                             </select>
                             @error('paket')
