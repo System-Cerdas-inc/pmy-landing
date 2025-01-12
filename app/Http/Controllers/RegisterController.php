@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Library\WaNotification;
 use App\Models\PaketModel;
-use App\Models\RegisterModel;
 use Illuminate\Http\Request;
+use App\Models\RegisterModel;
+use App\Http\Library\WaNotification;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -18,6 +19,7 @@ class RegisterController extends Controller
         $data['year'] = date("Y");
         $data['nama_menu'] = "Register";
         $data['data_paket'] = PaketModel::where('status', 1)->get();
+        $data['package_id'] = request()->package ? Crypt::decrypt(request()->package) : null;
         return view('register', $data);
     }
 

@@ -100,7 +100,7 @@
                             <select class="form-control @error('paket') is-invalid @enderror" id="paket" name="paket" readonly>
                                 <option value="" selected>Pilih paket internet</option>
                                 @foreach($data_paket as $item)
-                                <option value="{{ $item->id }}" data-harga="{{ $item->registrasi }}" @if (request('package') == $item->id) selected @endif>{{ $item->nama }} - Rp. {{ number_format($item->harga, 0, ',', '.') }}/bulan</option>
+                                <option value="{{ $item->id }}" data-harga="{{ $item->registrasi }}" @if ($package_id == $item->id) selected @endif>{{ $item->nama }} - Rp. {{ number_format($item->harga, 0, ',', '.') }}/bulan</option>
                                 @endforeach
                             </select>
                             @error('paket')
@@ -163,8 +163,9 @@
         var paketSelect = document.getElementById('paket');
         var hargaRegistrasi = document.getElementById('harga-registrasi');
 
-        paketSelect.addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex];
+        // Function untuk menampilkan harga registrasi
+        function updateHargaRegistrasi() {
+            var selectedOption = paketSelect.options[paketSelect.selectedIndex];
             var harga = selectedOption.getAttribute('data-harga');
             if (harga) {
                 hargaRegistrasi.style.display = 'inline'; // Tampilkan pesan harga registrasi
@@ -172,7 +173,7 @@
             } else {
                 hargaRegistrasi.style.display = 'none'; // Sembunyikan pesan harga registrasi jika tidak ada harga
             }
-        });
+        }
 
         // Function untuk format rupiah
         function formatRupiah(angka) {
@@ -187,6 +188,12 @@
             }
             return rupiah;
         }
+
+        // Jalankan fungsi updateHargaRegistrasi di awal
+        updateHargaRegistrasi();
+
+        // Tambahkan event listener untuk perubahan select
+        paketSelect.addEventListener('change', updateHargaRegistrasi);
     });
 
     function btn_submit() {
