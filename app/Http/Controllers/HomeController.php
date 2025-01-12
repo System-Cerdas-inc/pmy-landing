@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Library\WaNotification;
 use App\Models\PaketModel;
-use App\Models\PostinganModel;
 use Illuminate\Http\Request;
+use App\Models\PostinganModel;
+use Illuminate\Support\Facades\DB;
+use App\Http\Library\WaNotification;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,10 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at secara descending (terbaru dulu)
             ->first(); // Ambil data pertama yang cocok dengan kriteria di atas
 
-        $data['data_paket'] = PaketModel::where('status', '1')
-            ->where('jenis', 'Promo')->take(4)->get();
+        $data['data_paket'] = PaketModel::select('*', DB::raw('COALESCE(urutan, 999) as urutan_temp'))
+            ->where('jenis', 'Promo')->take(4)
+            ->orderBy('urutan_temp', 'asc')->where('status', '1')
+            ->get();
         $data['data_postingan'] = PostinganModel::where('jenis', 'Video')->get();
         $data['data_postingan_harga'] = '0';
 

@@ -58,7 +58,7 @@ class AdminPaketController extends Controller
 
     public function show_table()
     {
-        $data = PaketModel::all();
+        $data = PaketModel::orderBy('urutan', 'asc')->get();
 
         $result = [];
         $counter = 1;
@@ -78,13 +78,13 @@ class AdminPaketController extends Controller
                 $popular = 'Tidak';
             }
             $result[] = [
-                'nama' => $item->nama,
+                'nama' => $item->nama . '<br>' . $item->jenis,
                 'kecepatan' => $item->kecepatan,
                 'harga' => 'Rp. ' . number_format($item->harga),
-                'jenis' => $item->jenis,
                 'device' => $item->device,
                 'registrasi' => 'Rp. ' . number_format($item->registrasi),
                 'popular' => $popular,
+                'urutan' => $item->urutan ?? '-',
                 'status' => $status,
                 'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>' . $btn,
                 // Sesuaikan dengan atribut yang ada di model Anda
@@ -104,7 +104,8 @@ class AdminPaketController extends Controller
             'harga' => 'required|string|max:255',
             'jenis' => 'required|string|max:255',
             'device' => 'required|string|max:255',
-            'registrasi' => 'required|string|max:255'
+            'registrasi' => 'required|string|max:255',
+            'urutan' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -122,6 +123,15 @@ class AdminPaketController extends Controller
         $data->registrasi = str_replace(".", "", $request->input('registrasi'));
         $data->jenis = $request->input('jenis');
         $data->popular = $request->has('popular');
+
+        $sortOrder = $request->input('urutan', 0);
+
+        // Atur data lama ke 0 jika `sort_order` duplikat
+        PaketModel::where('urutan', $sortOrder)->update(['urutan' => null]);
+
+        // Set nilai `sort_order` untuk data baru
+        $data->urutan = $sortOrder;
+
         // Set status default 1 jika data baru
         if (!$id) {
             $data->status = 1;

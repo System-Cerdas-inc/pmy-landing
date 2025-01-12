@@ -104,6 +104,15 @@
                     </label>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="nama">Urutan*</label>
+                <input type="number" min="1" class="form-control @error('urutan') is-invalid @enderror" id="urutan" name="urutan" placeholder="urutan paket internet" value="{{ old('urutan', $data_paket->urutan ?? '') }}">
+                @error('urutan')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
         </div>
         <div class="card-footer">
             <div class="row">
