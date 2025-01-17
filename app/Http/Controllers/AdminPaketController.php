@@ -63,7 +63,7 @@ class AdminPaketController extends Controller
         $result = [];
         $counter = 1;
         foreach ($data as $item) {
-            //check status
+            // Check status
             if ($item->status == '1') {
                 $status = '<span class="badge badge-pill badge-success">Aktif</span>';
                 $btn = '<button type="button" class="btn btn-danger btn-sm" id="btn_nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><span class="fas fa-times fe-12"></span></button>';
@@ -71,23 +71,37 @@ class AdminPaketController extends Controller
                 $status = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
                 $btn = '<button type="button" class="btn btn-success btn-sm" id="btn_aktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
             }
-            //check popular
+
+            // Check popular
             if ($item->popular == '1') {
                 $popular = 'Ya';
             } else {
                 $popular = 'Tidak';
             }
+
+            // Format visibility
+            $visibility = '
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge ' . ($item->nama_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Nama</span>
+                    <span class="badge ' . ($item->kecepatan_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Kecepatan</span>
+                    <span class="badge ' . ($item->device_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Device</span>
+                    <span class="badge ' . ($item->harga_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Harga</span>
+                    <span class="badge ' . ($item->registrasi_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Registrasi</span>
+                    <span class="badge ' . ($item->popular_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Popular</span>
+                </div>
+            ';
+
             $result[] = [
                 'nama' => $item->nama . '<br>' . $item->jenis,
                 'kecepatan' => $item->kecepatan,
-                'harga' => 'Rp. ' . number_format($item->harga),
+                //untuk harga paket dan registrasi disatukan dengan span
+                'harga' => '<span class="badge badge-primary">Paket: Rp. ' . number_format($item->harga) . '</span><br><span class="badge badge-primary">Registrasi: Rp. ' . number_format($item->registrasi) . '</span>',
                 'device' => $item->device,
-                'registrasi' => 'Rp. ' . number_format($item->registrasi),
                 'popular' => $popular,
                 'urutan' => $item->urutan ?? '-',
                 'status' => $status,
+                'visibility' => $visibility, // Tambahkan kolom visibility
                 'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>' . $btn,
-                // Sesuaikan dengan atribut yang ada di model Anda
             ];
             $counter++;
         }
@@ -123,6 +137,15 @@ class AdminPaketController extends Controller
         $data->registrasi = str_replace(".", "", $request->input('registrasi'));
         $data->jenis = $request->input('jenis');
         $data->popular = $request->has('popular');
+
+        // Simpan status visibility
+        $data->nama_visible = $request->has('nama_visible');
+        $data->kecepatan_visible = $request->has('kecepatan_visible');
+        $data->device_visible = $request->has('device_visible');
+        $data->harga_visible = $request->has('harga_visible');
+        $data->registrasi_visible = $request->has('registrasi_visible');
+        $data->jenis_visible = $request->has('jenis_visible');
+        $data->popular_visible = $request->has('popular_visible');
 
         $sortOrder = $request->input('urutan', 0);
 

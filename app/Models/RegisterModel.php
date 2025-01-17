@@ -10,4 +10,6 @@ class RegisterModel extends Model
     use HasFactory;
 
     protected $table = 'tb_register';
+
+    protected $guarded = ['id'];
 }
