@@ -61,49 +61,61 @@
         </div><!-- End Section Title -->
 
         <div class="container">
-
             <div class="row gy-4">
                 @foreach ($data_paket as $item)
-                    <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="pricing-tem">
-                            @if ($item->popular == '1')
-                                <span class="featured">Popular</span>
-                            @endif
-
-                            <h2 style="color: #0dcaf0;">{{ $item->nama }}</h2>
-                            @if ($item->nama != 'Paket Hemat')
-                            <h6>{{ $item->kecepatan }} Mbps</h6>
-                            @endif
-                            <div class="price"><sup>Rp.</sup>{{ number_format($item->harga) }}<span> / bulan</span></div>
-                            <ul>
-                                <li>Kecepatan hingga {{ $item->kecepatan }} Mbps</li>
-                                @if ($item->nama == 'Paket Hemat')
-                                    <li>Maksimal Untuk 1 - {{ $item->device }} Device</li>
-                                    <li>Kuota Unlimited</li>
-                                    <li>Sistem Voucher Roaming</li>
-                                @else
-                                    <li>Bebas Device / HP yang terhubung</li>
-                                    <li>Standar Untuk 1 - {{ $item->device }} Device</li>
-                                    <li>Kuota Unlimited</li>
+                    @if ($item->status == '1') <!-- Cek status paket aktif -->
+                        <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="pricing-tem">
+                                @if ($item->popular == '1' && $item->popular_visible) <!-- Cek popular dan visibility -->
+                                    <span class="featured">Popular</span>
                                 @endif
-                                <li>Registrasi Rp.{{ number_format($item->registrasi) }}</li>
-                                <!-- <li class="na">Registrasi Rp.{{ number_format($item->registrasi) }}</li> -->
-                            </ul>
-                            <a href="{{ route('register') }}?package={{ Crypt::encrypt($item->id) }}" class="btn-buy">Daftar Sekarang</a>
-                        </div>
-                    </div><!-- End Pricing Item -->
-                @endforeach
 
+                                @if ($item->nama_visible) <!-- Cek visibility nama -->
+                                    <h2 style="color: #0dcaf0;">{{ $item->nama }}</h2>
+                                @endif
+
+                                @if ($item->kecepatan_visible && $item->nama != 'Paket Hemat') <!-- Cek visibility kecepatan -->
+                                    <h6>{{ $item->kecepatan }} Mbps</h6>
+                                @endif
+
+                                @if ($item->harga_visible) <!-- Cek visibility harga -->
+                                    <div class="price"><sup>Rp.</sup>{{ number_format($item->harga, 0, ',', '.') }}<span> / bulan</span></div>
+                                @endif
+
+                                <ul>
+                                    @if ($item->kecepatan_visible) <!-- Cek visibility kecepatan -->
+                                        <li>Kecepatan hingga {{ $item->kecepatan }} Mbps</li>
+                                    @endif
+
+                                    @if ($item->device_visible) <!-- Cek visibility device -->
+                                        @if ($item->nama == 'Paket Hemat')
+                                            <li>Maksimal Untuk 1 - {{ $item->device }} Device</li>
+                                            <li>Kuota Unlimited</li>
+                                            <li>Sistem Voucher Roaming</li>
+                                        @else
+                                            <li>Bebas Device / HP yang terhubung</li>
+                                            <li>Standar Untuk 1 - {{ $item->device }} Device</li>
+                                            <li>Kuota Unlimited</li>
+                                        @endif
+                                    @endif
+
+                                    @if ($item->registrasi_visible) <!-- Cek visibility registrasi -->
+                                        <li>Registrasi Rp.{{ number_format($item->registrasi, 0, ',', '.') }}</li>
+                                    @endif
+                                </ul>
+
+                                <a href="{{ route('register') }}?package={{ Crypt::encrypt($item->id) }}" class="btn-buy">Daftar Sekarang</a>
+                            </div>
+                        </div><!-- End Pricing Item -->
+                    @endif
+                @endforeach
             </div><!-- End pricing row -->
             <br>
             <center>
                 <a href="{{ route('paket') }}" class="btn-get-started">Lihat Paket Lain</a>
             </center>
-
-
         </div>
-
-    </section><!-- /paket Section -->
+    </section><!-- /Paket Section -->
 
     <!-- Faq Section -->
     <section id="tutorial" class="faq section">

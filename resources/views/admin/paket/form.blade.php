@@ -15,25 +15,32 @@
     <form action="{{ route('tambah-paket') }}" method="POST">
         @csrf
         <div class="card-body">
-            <div class="form-group" hidden>
-                <label for="id">ID</label>
-                <input class="form-control" id="id" readonly name="id" value="{{ $data_paket->id ?? '' }}">
-            </div>
             <div class="form-group">
                 <label for="nama">Nama*</label>
-                <input class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama paket internet" value="{{ old('nama', $data_paket->nama ?? '') }}">
+                <div class="input-group">
+                    <input class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama paket internet" value="{{ old('nama', $data_paket->nama ?? '') }}">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" name="nama_visible" {{ old('nama_visible', $data_paket->nama_visible ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
+                </div>
                 @error('nama')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
+            
             <div class="form-group">
                 <label for="kecepatan">Kecepatan Internet*</label>
-                <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group">
                     <input class="form-control @error('kecepatan') is-invalid @enderror" id="kecepatan" name="kecepatan" placeholder="Kecepatan paket internet" onkeypress="return hanyaAngka(event, true);" value="{{ old('kecepatan', $data_paket->kecepatan ?? '') }}">
-                    <div class="input-group-prepend">
+                    <div class="input-group-append">
                         <div class="input-group-text">Mbps</div>
+                        <div class="input-group-text">
+                            <input type="checkbox" name="kecepatan_visible" {{ old('kecepatan_visible', $data_paket->kecepatan_visible ?? true) ? 'checked' : '' }}>
+                        </div>
                     </div>
                 </div>
                 @error('kecepatan')
@@ -42,24 +49,36 @@
                 </div>
                 @enderror
             </div>
+            
             <div class="form-group">
                 <label for="device">Device*</label>
-                <input class="form-control @error('device') is-invalid @enderror" id="device" name="device" placeholder="Jumlah device" onkeypress="return hanyaAngka(event, true);" value="{{ old('device', $data_paket->device ?? '') }}">
+                <div class="input-group">
+                    <input class="form-control @error('device') is-invalid @enderror" id="device" name="device" placeholder="Jumlah device" onkeypress="return hanyaAngka(event, true);" value="{{ old('device', $data_paket->device ?? '') }}">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" name="device_visible" {{ old('device_visible', $data_paket->device_visible ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
+                </div>
                 @error('device')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
+            
             <div class="form-group">
                 <label for="harga">Harga*</label>
-                <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">Rp.</div>
                     </div>
                     <input class="form-control @error('harga') is-invalid @enderror" id="harga" name="harga" placeholder="Harga paket internet" onkeypress="return hanyaAngka(event, true);" value="{{ old('harga', $data_paket->harga ?? '') }}">
-                    <div class="input-group-prepend">
+                    <div class="input-group-append">
                         <div class="input-group-text">/bulan</div>
+                        <div class="input-group-text">
+                            <input type="checkbox" name="harga_visible" {{ old('harga_visible', $data_paket->harga_visible ?? true) ? 'checked' : '' }}>
+                        </div>
                     </div>
                 </div>
                 @error('harga')
@@ -68,13 +87,19 @@
                 </div>
                 @enderror
             </div>
+            
             <div class="form-group">
                 <label for="registrasi">Harga Registrasi*</label>
-                <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">Rp.</div>
                     </div>
                     <input class="form-control @error('registrasi') is-invalid @enderror" id="registrasi" name="registrasi" placeholder="Harga registrasi" onkeypress="return hanyaAngka(event, true);" value="{{ old('registrasi', $data_paket->registrasi ?? '') }}">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" name="registrasi_visible" {{ old('registrasi_visible', $data_paket->registrasi_visible ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
                 </div>
                 @error('registrasi')
                 <div class="invalid-feedback">
@@ -82,31 +107,48 @@
                 </div>
                 @enderror
             </div>
+            
             <div class="form-group">
                 <label for="jenis">Jenis*</label>
-                <select id="jenis" name="jenis" class="form-control @error('jenis') is-invalid @enderror">
-                    <option value="" {{ old('jenis', $data_paket->jenis ?? '') == '' ? 'selected' : '' }}>Pilih jenis paket internet</option>
-                    <option value="Regular" {{ old('jenis', $data_paket->jenis ?? '') == 'Regular' ? 'selected' : '' }}>Regular</option>
-                    <option value="Promo" {{ old('jenis', $data_paket->jenis ?? '') == 'Promo' ? 'selected' : '' }}>Promo</option>
-                </select>
+                <div class="input-group">
+                    <select id="jenis" name="jenis" class="form-control @error('jenis') is-invalid @enderror">
+                        <option value="" {{ old('jenis', $data_paket->jenis ?? '') == '' ? 'selected' : '' }}>Pilih jenis paket internet</option>
+                        <option value="Regular" {{ old('jenis', $data_paket->jenis ?? '') == 'Regular' ? 'selected' : '' }}>Regular</option>
+                        <option value="Promo" {{ old('jenis', $data_paket->jenis ?? '') == 'Promo' ? 'selected' : '' }}>Promo</option>
+                    </select>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" name="jenis_visible" {{ old('jenis_visible', $data_paket->jenis_visible ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
+                </div>
                 @error('jenis')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
+            
             <div class="form-group">
                 <label for="popular">Popular</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="popular" name="popular" {{ old('popular', $data_paket->popular ?? '') ? 'checked' : '' }}>
-                    <label class="form-check-label" for="popular">
-                        Ya
-                    </label>
+                <div class="input-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="popular" name="popular" {{ old('popular', $data_paket->popular ?? '') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="popular">Ya</label>
+                    </div>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <input type="checkbox" name="popular_visible" {{ old('popular_visible', $data_paket->popular_visible ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
             <div class="form-group">
-                <label for="nama">Urutan*</label>
-                <input type="number" min="1" class="form-control @error('urutan') is-invalid @enderror" id="urutan" name="urutan" placeholder="urutan paket internet" value="{{ old('urutan', $data_paket->urutan ?? '') }}">
+                <label for="urutan">Urutan*</label>
+                <div class="input-group">
+                    <input type="number" min="1" class="form-control @error('urutan') is-invalid @enderror" id="urutan" name="urutan" placeholder="urutan paket internet" value="{{ old('urutan', $data_paket->urutan ?? '') }}">
+                </div>
                 @error('urutan')
                 <div class="invalid-feedback">
                     {{ $message }}

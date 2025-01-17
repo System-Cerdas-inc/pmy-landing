@@ -10,4 +10,6 @@ class PostinganModel extends Model
     use HasFactory;
 
     protected $table = 'tb_postingan';
+
+    protected $guarded = ['id'];
 }

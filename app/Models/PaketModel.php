@@ -10,4 +10,6 @@ class PaketModel extends Model
     use HasFactory;
 
     protected $table = 'tb_paket';
+
+    protected $guarded = ['id'];
 }

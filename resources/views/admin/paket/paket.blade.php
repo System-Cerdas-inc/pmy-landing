@@ -26,10 +26,10 @@
                             <th>Kecepatan</th>
                             <th>Device</th>
                             <th>Harga</th>
-                            <th>Registrasi</th>
                             <th>Popular</th>
                             <th>Urutan</th>
                             <th>Status</th>
+                            <th>Visibility</th> <!-- Kolom baru untuk Visibility -->
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -91,10 +91,6 @@
                         name: 'Description'
                     },
                     {
-                        data: 'registrasi',
-                        name: 'Description'
-                    },
-                    {
                         data: 'popular',
                         name: 'Description'
                     },
@@ -107,28 +103,30 @@
                         name: 'Status'
                     },
                     {
+                        data: 'visibility',
+                        name: 'Visibility'
+                    }, // Kolom Visibility
+                    {
                         data: 'button',
                         name: 'Button'
                     }
-                    // Tambahkan kolom lain sesuai kebutuhan
                 ],
                 'columnDefs': [{
-                    "targets": [5, 6], // your case first column
+                    "targets": [4, 5], // Kolom Popular dan Urutan
                     "className": "text-center",
                 }],
                 columnDefs: [{
-                    targets: 6, // Indeks kolom urutan
+                    targets: 5, // Indeks kolom urutan
                     render: function(data, type, row) {
                         return data !== '-' ? data : 999; // Berikan nilai besar untuk NULL
                     },
                     type: 'num'
                 }],
                 order: [
-                    [6, 'asc']
+                    [5, 'asc'] // Urutkan berdasarkan kolom urutan
                 ],
                 processing: true,
                 responsive: true
-                // serverSide: true
             });
         });
 
