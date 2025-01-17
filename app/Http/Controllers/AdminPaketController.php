@@ -138,6 +138,15 @@ class AdminPaketController extends Controller
         $data->jenis = $request->input('jenis');
         $data->popular = $request->has('popular');
 
+        // Simpan status visibility
+        $data->nama_visible = $request->has('nama_visible');
+        $data->kecepatan_visible = $request->has('kecepatan_visible');
+        $data->device_visible = $request->has('device_visible');
+        $data->harga_visible = $request->has('harga_visible');
+        $data->registrasi_visible = $request->has('registrasi_visible');
+        $data->jenis_visible = $request->has('jenis_visible');
+        $data->popular_visible = $request->has('popular_visible');
+
         $sortOrder = $request->input('urutan', 0);
 
         // Atur data lama ke 0 jika `sort_order` duplikat
