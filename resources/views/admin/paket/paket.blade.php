@@ -164,29 +164,50 @@
             pesan = 'nonaktif';
         }
 
+        function btn_delete(id, nama) {
+            $('#form_confirm')[0].reset(); // reset form on modals
+            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
+            $('#modal_title_confirm').html('Konfirmasi Hapus'); //ganti nama label pada modal
+
+            $('#text_confirm').html('Anda yakin ingin menghapus paket dengan nama <b>' + nama + '</b>?');
+            $('[name="id_confirm"]').val(id);
+            $('[name="kondisi"]').val('hapus');
+            pesan = 'hapus';
+        }
+
         function confirm() {
+            var url, data;
+
+            if ($('#kondisi').val() === 'hapus') {
+                url = "{{ route('delete-paket') }}"; // Route untuk delete
+            } else {
+                url = "{{ route('status-paket') }}"; // Route untuk aktif/nonaktif
+            }
+
+            data = $('#form_confirm').serialize(); // Ambil data dari form
+
             $.ajax({
-                url: "{{ route('status-paket') }}", //link access data
+                url: url, // Link access data
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }, //Ini akan menambahkan token CSRF pada CUD
-                type: "POST", //action in form
-                dataType: "JSON", //accepted data types
-                data: $('#form_confirm').serialize(), //retrieve data from form
-                success: function(data) {
-                    //show notification
-                    if (data.status === "success") {
-                        toastr["success"]("Paket data berhasil dilakukan " + pesan + ".", "Success");
+                }, // Token CSRF
+                type: "POST", // Action in form
+                dataType: "JSON", // Accepted data types
+                data: data, // Retrieve data from form
+                success: function(response) {
+                    // Show notification
+                    if (response.status === "success") {
+                        toastr["success"]("Paket berhasil di" + pesan + ".", "Success");
 
-                        $('#form_confirm')[0].reset(); // reset form on modals
-                        $('#modal_confirm').modal('hide'); // show bootstrap modal
-                        reload();
+                        $('#form_confirm')[0].reset(); // Reset form on modals
+                        $('#modal_confirm').modal('hide'); // Hide bootstrap modal
+                        reload(); // Reload datatable
                     } else {
-                        toastr["error"]("Paket data gagal dilakukan " + pesan + ", try again!", "Failed");
+                        toastr["error"]("Paket gagal di" + pesan + ", coba lagi!", "Failed");
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    toastr["error"]("check your internet connection and refresh this page again!" + jqXHR
+                    toastr["error"]("Cek koneksi internet Anda dan muat ulang halaman ini! " + jqXHR
                         .responseText, "Failed");
                 }
             });
