@@ -53,6 +53,7 @@ Route::get('/table-paket', [AdminPaketController::class, 'show_table'])->name('t
 Route::get('/form-paket/{id?}', [AdminPaketController::class, 'index_form'])->name('form-paket');
 Route::post('/tambah-paket', [AdminPaketController::class, 'tambah'])->name('tambah-paket');
 Route::post('/status-paket', [AdminPaketController::class, 'status'])->name('status-paket');
+Route::post('/delete-paket', [AdminPaketController::class, 'delete'])->name('delete-paket');
 //admin postingan
 Route::get('/admin-postingan', [AdminPostinganController::class, 'index'])->name('admin-postingan');
 Route::get('/table-postingan', [AdminPostinganController::class, 'show_table'])->name('table-postingan');

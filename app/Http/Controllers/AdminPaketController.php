@@ -66,10 +66,10 @@ class AdminPaketController extends Controller
             // Check status
             if ($item->status == '1') {
                 $status = '<span class="badge badge-pill badge-success">Aktif</span>';
-                $btn = '<button type="button" class="btn btn-danger btn-sm" id="btn_nonaktif" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><span class="fas fa-times fe-12"></span></button>';
+                $btn_status = '<a class="dropdown-item" href="javascript:void(0);" onclick="btn_nonaktif(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><i class="fas fa-times mr-2"></i>Nonaktifkan</a>';
             } else {
                 $status = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
-                $btn = '<button type="button" class="btn btn-success btn-sm" id="btn_aktif" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><span class="fas fa-check fe-12"></span></button>';
+                $btn_status = '<a class="dropdown-item" href="javascript:void(0);" onclick="btn_aktif(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><i class="fas fa-check mr-2"></i>Aktifkan</a>';
             }
 
             // Check popular
@@ -81,27 +81,43 @@ class AdminPaketController extends Controller
 
             // Format visibility
             $visibility = '
-                <div class="d-flex flex-wrap gap-2">
-                    <span class="badge ' . ($item->nama_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Nama</span>
-                    <span class="badge ' . ($item->kecepatan_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Kecepatan</span>
-                    <span class="badge ' . ($item->device_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Device</span>
-                    <span class="badge ' . ($item->harga_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Harga</span>
-                    <span class="badge ' . ($item->registrasi_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Registrasi</span>
-                    <span class="badge ' . ($item->popular_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Popular</span>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge ' . ($item->nama_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Nama</span>
+                <span class="badge ' . ($item->kecepatan_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Kecepatan</span>
+                <span class="badge ' . ($item->device_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Device</span>
+                <span class="badge ' . ($item->harga_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Harga</span>
+                <span class="badge ' . ($item->registrasi_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Registrasi</span>
+                <span class="badge ' . ($item->popular_visible ? 'badge-success mb-1' : 'badge-secondary') . '">Popular</span>
+            </div>
+        ';
+
+            // Format harga dan registrasi
+            $harga = '<span class="badge badge-primary">Paket: Rp. ' . number_format($item->harga) . '</span><br><span class="badge badge-primary">Registrasi: Rp. ' . number_format($item->registrasi) . '</span>';
+
+            // Dropdown button
+            $button = '
+            <div class="dropdown">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton' . $item->id . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cog"></i> Aksi
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $item->id . '">
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="modal_edit(' . "'" . $item->id . "'" . ')"><i class="fas fa-edit mr-2"></i>Edit</a>
+                    ' . $btn_status . '
+                    <a class="dropdown-item text-danger" href="javascript:void(0);" onclick="btn_delete(' . "'" . $item->id . "'" . ', ' . "'" . $item->nama . "'" . ')"><i class="fas fa-trash mr-2"></i>Hapus</a>
                 </div>
-            ';
+            </div>
+        ';
 
             $result[] = [
                 'nama' => $item->nama . '<br>' . $item->jenis,
                 'kecepatan' => $item->kecepatan,
-                //untuk harga paket dan registrasi disatukan dengan span
-                'harga' => '<span class="badge badge-primary">Paket: Rp. ' . number_format($item->harga) . '</span><br><span class="badge badge-primary">Registrasi: Rp. ' . number_format($item->registrasi) . '</span>',
+                'harga' => $harga,
                 'device' => $item->device,
                 'popular' => $popular,
                 'urutan' => $item->urutan ?? '-',
                 'status' => $status,
-                'visibility' => $visibility, // Tambahkan kolom visibility
-                'button' => '<button type="button" class="btn btn-warning btn-sm" onclick="modal_edit(' . "'" . $item->id . "'" . ')" style="margin-right: 10px;"><span class="fas fa-edit fe-12"></span></button>' . $btn,
+                'visibility' => $visibility, // Kolom visibility
+                'button' => $button, // Kolom action (dropdown)
             ];
             $counter++;
         }
@@ -149,15 +165,17 @@ class AdminPaketController extends Controller
 
         $sortOrder = $request->input('urutan', 0);
 
-        // Atur data lama ke 0 jika `sort_order` duplikat
-        PaketModel::where('urutan', $sortOrder)->update(['urutan' => null]);
+        // Atur data lama ke 0 jika `sort_order` duplikat, kecuali record yang sedang diupdate
+        PaketModel::where('urutan', $sortOrder)
+            ->where('id', '!=', $id)
+            ->update(['urutan' => null]);
 
         // Set nilai `sort_order` untuk data baru
         $data->urutan = $sortOrder;
 
         // Set status default 1 jika data baru
         if (!$id) {
-            $data->status = 1;
+            $data->status = 1; // Ubah status menjadi 1: Aktif
         }
         $simpan = $data->save();
 
@@ -180,9 +198,9 @@ class AdminPaketController extends Controller
     {
         //check status
         if ($request->input('kondisi') == 'aktif') {
-            $data_status = '1';
+            $data_status = '1'; // Ubah status menjadi 1: Aktif
         } else {
-            $data_status = '2';
+            $data_status = '2'; // Ubah status menjadi 2: Tidak Aktif
         }
         // Temukan paket berdasarkan ID
         $data = PaketModel::findOrFail($request->input('id_confirm'));
@@ -193,6 +211,21 @@ class AdminPaketController extends Controller
             return response()->json(['status' => 'success']);
         } else {
             return response()->json(['status' => 'error']);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->input('id_confirm');
+
+        // Cari data berdasarkan ID
+        $data = PaketModel::find($id);
+
+        if ($data) {
+            $data->delete(); // Hapus data
+            return response()->json(['status' => 'success', 'message' => 'Data berhasil dihapus.']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Data tidak ditemukan.']);
         }
     }
 }
