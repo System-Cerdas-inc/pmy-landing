@@ -15,6 +15,7 @@
     <form action="{{ route('tambah-paket') }}" method="POST">
         @csrf
         <div class="card-body">
+            <input type="hidden" name="id" value="{{ $data_paket->id ?? '' }}">
             <div class="form-group">
                 <label for="nama">Nama*</label>
                 <div class="input-group">
