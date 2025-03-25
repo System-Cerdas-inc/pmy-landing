@@ -3,13 +3,13 @@
 @section('main_content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Paket</h1>
+        <h1 class="h3 mb-0 text-gray-800">Keterangan Paket</h1>
     </div>
 
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Tabel Paket</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Tabel Keterangan Paket</h6>
             <div class="dropdown no-arrow">
                 <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="modal_tambah();">Tambah
                     Data</button>
@@ -22,14 +22,8 @@
                 <table class="table datatables" id="data_table">
                     <thead>
                         <tr>
-                            <th>Nama</th>
-                            <th>Kecepatan</th>
-                            <th>Device</th>
-                            <th>Harga</th>
-                            <th>Popular</th>
-                            <th>Urutan</th>
-                            <th>Status</th>
-                            <th>Visibility</th> <!-- Kolom baru untuk Visibility -->
+                            <th>Id</th>
+                            <th>Judul</th>
                             <th>#</th>
                         </tr>
                     </thead>
@@ -71,67 +65,32 @@
         $(document).ready(function() {
             table = $('#data_table').DataTable({
                 ajax: {
-                    url: "{{ route('table-paket') }}",
+                    url: "{{ route('table-paket-keterangan') }}",
                     type: 'GET'
                 },
                 columns: [{
-                        data: 'nama',
-                        name: 'Name'
+                        data: 'id'
                     },
                     {
-                        data: 'kecepatan',
-                        name: 'Description'
+                        data: 'title'
                     },
                     {
-                        data: 'device',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'harga',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'popular',
-                        name: 'Description'
-                    },
-                    {
-                        data: 'urutan',
-                        name: 'Urutan'
-                    },
-                    {
-                        data: 'status',
-                        name: 'Status'
-                    },
-                    {
-                        data: 'visibility',
-                        name: 'Visibility'
-                    }, // Kolom Visibility
-                    {
-                        data: 'button',
-                        name: 'Button'
+                        data: 'button'
                     }
+                    // Tambahkan kolom lain sesuai kebutuhan
                 ],
                 'columnDefs': [{
-                    "targets": [4, 5], // Kolom Popular dan Urutan
+                    "targets": [0], // your case first column
                     "className": "text-center",
                 }],
-                columnDefs: [{
-                    targets: 5, // Indeks kolom urutan
-                    render: function(data, type, row) {
-                        return data !== '-' ? data : 999; // Berikan nilai besar untuk NULL
-                    },
-                    type: 'num'
-                }],
-                order: [
-                    [5, 'asc'] // Urutkan berdasarkan kolom urutan
-                ],
                 processing: true,
                 responsive: true
+                // serverSide: true
             });
         });
 
         function modal_tambah() {
-            window.location = `{{ route('form-paket') }}`;
+            window.location = `{{ route('form-paket-keterangan') }}`;
         }
 
         function reload() {
@@ -139,29 +98,8 @@
         }
 
         function modal_edit(id) {
-            window.location = `{{ route('form-paket', ['id' => '__PLACEHOLDER__']) }}`.replace('__PLACEHOLDER__', id);
-        }
-
-        function btn_aktif(id, nama) {
-            $('#form_confirm')[0].reset(); // reset form on modals
-            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
-            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
-
-            $('#text_confirm').html('Anda yakin ingin mengaktifkan paket dengan nama <b>' + nama + '</b>?');
-            $('[name="id_confirm"]').val(id);
-            $('[name="kondisi"]').val('aktif');
-            pesan = 'aktifasi';
-        }
-
-        function btn_nonaktif(id, nama) {
-            $('#form_confirm')[0].reset(); // reset form on modals
-            $('#modal_confirm').modal('show'); // show bootstrap modal when complete loaded
-            $('#modal_title_confirm').html('Konfirmasi'); //ganti nama label pada modal
-
-            $('#text_confirm').html('Anda yakin ingin menonaktifkan paket dengan nama <b>' + nama + '</b>?');
-            $('[name="id_confirm"]').val(id);
-            $('[name="kondisi"]').val('nonaktif');
-            pesan = 'nonaktif';
+            window.location = `{{ route('form-paket-keterangan', ['id' => '__PLACEHOLDER__']) }}`.replace('__PLACEHOLDER__',
+                id);
         }
 
         function btn_delete(id, nama) {
@@ -179,9 +117,7 @@
             var url, data;
 
             if ($('#kondisi').val() === 'hapus') {
-                url = "{{ route('delete-paket') }}"; // Route untuk delete
-            } else {
-                url = "{{ route('status-paket') }}"; // Route untuk aktif/nonaktif
+                url = "{{ route('delete-paket-keterangan') }}"; // Route untuk delete
             }
 
             data = $('#form_confirm').serialize(); // Ambil data dari form

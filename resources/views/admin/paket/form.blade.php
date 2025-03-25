@@ -129,20 +129,26 @@
                 </div>
                 @enderror
             </div>
-            
+
             <div class="form-group">
-                <label for="popular">Popular</label>
+                <label for="polular">Popular</label>
                 <div class="input-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="popular" name="popular" {{ old('popular', $data_paket->popular ?? '') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="popular">Ya</label>
-                    </div>
+                    <select id="popular" name="popular" class="form-control @error('popular') is-invalid @enderror">
+                        <option value="" {{ old('popular', $data_paket->popular ?? '') == '' ? 'selected' : '' }}>Pilih popular</option>
+                        <option value="1" {{ old('popular', $data_paket->popular ?? '') == 1 ? 'selected' : '' }}>Ya</option>
+                        <option value="0" {{ old('popular', $data_paket->popular ?? '') == 2 ? 'selected' : '' }}>Tidak</option>
+                    </select>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <input type="checkbox" name="popular_visible" {{ old('popular_visible', $data_paket->popular_visible ?? true) ? 'checked' : '' }}>
                         </div>
                     </div>
                 </div>
+                @error('jenis')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
             
             <div class="form-group">

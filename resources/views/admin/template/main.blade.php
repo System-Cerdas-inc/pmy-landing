@@ -56,15 +56,20 @@
                     <i class="fas fa-network-wired"></i>
                     <span>Paket</span></a>
             </li>
-            <li class="nav-item {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin-pendaftaran') }}">
-                    <i class="fas fa-users"></i>
-                    <span>List Pendaftaran</span></a>
+            <li class="nav-item {{ $menu == 'Keterangan Paket' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin-paket-keterangan') }}">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Keterangan Paket</span></a>
             </li>
             <li class="nav-item {{ $menu == 'Postingan' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin-postingan') }}">
                     <i class="fas fa-pager"></i>
                     <span>Postingan</span></a>
+            </li>
+            <li class="nav-item {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin-pendaftaran') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Pendaftaran</span></a>
             </li>
 
             <!-- Divider -->
